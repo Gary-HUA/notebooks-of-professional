@@ -1,0 +1,32 @@
+import cv2 as cv
+import numpy as np
+
+# 通过摄像头进行视频获取
+def video_demo():
+    capture = cv.VideoCapture(0)
+    while(True):
+        ret, frame =capture.read()
+        frame = cv.flip(frame,1)  # 图像是相反的 翻转回来
+        cv.imshow("video",frame)
+        c= cv.waitKey(50)
+        if c == 27:
+            break
+
+# 图片信息方法
+def get_image_info(image):
+    print(type(image))  # <class 'numpy.ndarray'>
+    print(image.shape)  # (4032, 3024, 3)
+    print(image.size)  #36578304
+    print(image.dtype)  # uint8
+    # pixel_data = np.array(image)
+    # print(pixel_data)
+
+src = cv.imread("E:/python_OpenCV lib/opencv.jpg")
+cv.namedWindow("input image", cv.WINDOW_AUTOSIZE)
+cv.imshow("input image", src)
+get_image_info(src)
+video_demo()
+cv.waitKey(0)
+cv.destroyAllWindows()
+
+
