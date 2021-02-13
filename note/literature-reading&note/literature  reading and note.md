@@ -16,6 +16,16 @@
     SVM:support vector machine
     HMMs:hidden Markov models
     MCAD:multi-camera action dataset
+    ML: machine learning
+    DL: deep learning
+    STIP:space-time interest point temporal domain information is added to spatial ones.
+    HOVW:histogram of visual word.
+    HOG:histogram of oriented gradient
+    HOF:histogram of optical Flow
+    HOMB:histogram fo Motion Boundary
+    LSTM:long short-term memory
+    DBN:deep belief network
+    
     
     
 ~~~
@@ -23,8 +33,16 @@
 ~~~python
 ---basic concepts:
     1 "HAR systems" attempt to automatically analyze and recognize such HAs using the acquired information from the various types of sensors
-    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,
+    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,video retrieval,entertainment,education,abnormal activity identification,
     3."activity type":gestures, behaviors(action),interaction(activity),group actions, events.
+    4. "acquired device": sensors with RGB,range,radar,or wearable sensors,
+~~~
+
+~~~idea
+---idea:
+	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+收，的配合 >
+	local feature(partial of body , the main aim is arm+hand , and leg ,head)
+	classification/identifacation :head+arm,arm+leg,
 ~~~
 
 
@@ -65,6 +83,7 @@ Author: Djamila Romaissa Beddiar1,3 Abdenour Hadid3· Brahim Nini1 · Mohammad S
             (2)behavior level:VISOR,Caviar,MCAD
             (3)interaction level:MSR daily,50 salads,MuHAVI,UCF50,UCF Sports,ETISEO,olypic sports,UT-interaction,UT-tower,
             (4)group activities level:ActivityNet Dataset,The Kinetics Human Action Video Dataset,HMDB-51,Hollywood dataset,Hollywood2 					,UCF-101,YouTube Action Dataset,Behave dataset,Video Web Dataset
+   key&idea or shortage/increase
          
 ~~~
 
@@ -73,7 +92,23 @@ Author: Djamila Romaissa Beddiar1,3 Abdenour Hadid3· Brahim Nini1 · Mohammad S
 Author: Preksha Pareek1 · Ankit Thakkar1
 
 ~~~python
-
+1.primary thesis:
+    in this paper, we have discusses various ML and DL techniques for HAR,challenge,public dataset, future directions in HAR
+2.Critical components of the argument that support the thesis:
+    2-1:prior survey
+        (1)still image-based action recognition  low-level feature extraction and high-level representation for action.
+        (2)action representation and analysis based HAR
+        (3)abnormal activity detection
+        (4)sensor based activity recognition
+    2-2:complete process:
+        (1)action representation:involves the extraction of a set of features form lacal/global feature.
+        (2)feature extraction and encoding:STIP,trajectory based,depth based,pose based RGB-D(2D,3D),motion based,shape based,hybrid(shape+motion)
+    2-3:discussion: 
+            traditional ML depend on handcrafted featuer representation.STIP feature are suitable for simple action and gestures,
+            the trajectory based method can analyze movements robust to view-invariant manner.
+            depth sensor,action detection is simpler and effective than using RGB data.advanced human pose estimation algorithms can make 			 it easier to gain accurate 3D skeleton data.
+       
+    
 ~~~
 
 
