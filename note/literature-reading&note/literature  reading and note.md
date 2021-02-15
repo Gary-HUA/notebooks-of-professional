@@ -1,5 +1,6 @@
 ### literature  reading and note
 
+#### general terms
 ~~~python
 ---general terms:
     HAR: human activity recognition
@@ -15,6 +16,7 @@
     CNN:convolutional neural networks
     RNN:recurrent neural networks
     SVM:support vector machine
+    RVM:relevant vector machine
     HMMs:hidden Markov models
     CHMM:coupled HMM
     HSMM:hidden semi-Markov model
@@ -56,7 +58,7 @@
     
     
 ~~~
-
+#### basic concepts
 ~~~python
 ---basic concepts:
     1 "HAR systems" attempt to automatically analyze and recognize such HAs using the acquired information from the various types of sensors
@@ -69,9 +71,12 @@
     8.human tracking:besides the activity calssification approaches,another critical research area is the human tracking approach,whch is concerned in video surveillance systems for suspicious behavior detection.for analyzing human behaviors and identifying potential unsafe or abnormal situations.
 ~~~
 
+#### idea
 ~~~idea
----idea:
-	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+收，的配合 >
+---idea: A suppose: how accuracy and easier extract/represent an activity.
+1. 动作的组成: 一个人的动作是由头,脖子,胳膊, 手,腿,脚等部分组合而成的,简单的就是H+A,A+L的组合构成.
+	如果我们对人的动作进行分解,那么在行为检测和获取的时候,通过不同部分的检测组合识别,那么可以对动作进行更加精准的识别和分类.单个人得动作组合有他个人得习惯特性.不同人得动作具有相似性.我们通过对动作的组合检测.会不会由更高的识别率和分类准确度. 分离检测会不会更加高效相对于整理复杂计算.
+	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+手，的配合 >
 	local feature(partial of body , the main aim is arm+hand , and leg ,head)
 	classification/identifacation :head+arm,arm+leg,
 ~~~
@@ -170,6 +175,50 @@ Author: Shugang Zhang,1 Zhiqiang Wei,1 Jie Nie,2 Lei Huang,1 Shuang Wang,1 and Z
 #### topic4:(2019)A Survey on Vision Based Activity Recognition, its Applications and Challenges
 
 Author: Ashwin Geet D’Sa, Dr. B G Prasad
+
+~~~python
+1.primary thesis:
+    here is an paper that introduce advantage and challenge in human activity recognition of computer vision.
+2.Critical components of the argument that support the thesis:
+   2-1: type of activity recognition based on the device used:
+        (1)sensor based activity recognition
+        (2)vision based activity recognition
+        (3)human activity recognition based on complexity(gesture,action,interaction,group activity)
+        (4)type os vision based activity recognition based on perspective(first-person/third-person perspective
+        (5)type of activity recognition based on approaches(single-layer,hierarchical approach)
+   2-2:application of activity recognition:
+       (1)behavior bio-metrics
+       (2)content based video analysis                                                                      (3)security and suveillance 
+       (4)interaction application and environment
+       (5)animation and synthesis
+       (6)healthcare system
+       (7)rehabilitation application                                                                    2-3:challenge in vision based HAR
+       (1)human behavior
+       (2)intra class variability                                                                   
+       (3)inter class similarity                                                                   
+       (4)illumination change                                                                   
+       (5)shadow effect                                                                  
+       (6)partial or full occlusions                                                                 
+       (7)self occlusions
+       (8)scaling
+       (9)bootstrapping
+       (10)camera jitter                                                                   
+       (11)camera automatic adjustment                                                               
+       (12)noise frame in video                                                                  
+       (13)camouflage                                                                   
+       (14)moving background objects or human                                                                                                                    
+~~~
+
+#### topic5:(2017)A Comprehensive Review on Handcrafted and Learning-Based Action Representation Approaches for Human Activity Recognition
+
+Author: Allah Bux Sargano 1,2,*, Plamen Angelov 1 and Zulfiqar Habib 
+
+~~~python
+1.primary thesis:
+    This review paper presents a comprehensive survey of both handcrafted and learning-based action representations, offering comparison, analysis, and discussions on these approaches.and public dataset
+2.Critical components of the argument that support the thesis:
+    
+~~~
 
 
 
