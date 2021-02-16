@@ -66,9 +66,15 @@
     3."activity type":human activity have an inherent hierarchical structure that indicates the different levels of it,which can be considerd as a three level categorization.first:for the bottom level, there is an atomic element and these action primitives constitute more complex human activity.  after action primitive level, the action/activity comes as the second level. finally ,the complex interaction from the top level,which refers to the human activity that involve more than two persons and objects.
     4. "acquired device": sensors with RGB,range,radar,or wearable sensors,
     5."human activity recognition(HAR)":aims to recognition activity from a series of observations on the action of subjects and the environmental conditions.
-    6.global representation: global representation extract global descriptors directly from original videos or iamges and encode them as a whole feature.
-    7.local representations:they focus on specific local patches which are determined by interest point detectors or densely sampling.most existing local features are proved to be robust against noise and partial occlusions comparing to global feature.
-    8.human tracking:besides the activity calssification approaches,another critical research area is the human tracking approach,whch is concerned in video surveillance systems for suspicious behavior detection.for analyzing human behaviors and identifying potential unsafe or abnormal situations.
+    6."global representation": global representation extract global descriptors directly from original videos or iamges and encode them as a whole feature.
+    7."local representations":they focus on specific local patches which are determined by interest point detectors or densely sampling.most existing local features are proved to be robust against noise and partial occlusions comparing to global feature.
+    8."human tracking":besides the activity calssification approaches,another critical research area is the human tracking approach,whch is concerned in video surveillance systems for suspicious behavior detection.for analyzing human behaviors and identifying potential unsafe or abnormal situations.
+    9."sigle-layer method":single layer method present and recognition human activity directly based on sequence images.
+    10."hierarchical layer method":describe high-level human activity by using simple activity called sub-event which are suitable for the  analysis of complex activity.
+    11."semantic space":include human knowledge about activity such as body part(pose/poselet),object,scene,and attribute feature. we categorize semantic method into three categorise:method based on body part,method based on scene/object,method based on attributes.
+    12."semantic define":Generally, semantics refers to what the sender and receiver of a
+message mean and how they infer the context of the message. Semantics is the study of meaning.
+In action recognition, the semantic understanding enables users to apply prior knowledge to the recognition process.
 ~~~
 
 #### idea
