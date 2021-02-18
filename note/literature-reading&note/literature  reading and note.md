@@ -226,9 +226,27 @@ Author: Allah Bux Sargano 1,2,*, Plamen Angelov 1 and Zulfiqar Habib
     
 ~~~
 
+#### topic6:(2015)Depth Silhouettes Context: A New Robust Feature for Human Tracking and Activity Recognition based on Embedded HMMs
 
+Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
 
+~~~python
+1.primary thesis:
+    in this paper,a video-based novel approach for human activity recognition is presented using robust hybrid feature and emmbedded HMMs
+2.Critical components of the argument that support the thesis:
+    2-1:In the proposed HAR framework, depth maps are analyzed by temporal motion identification method to segment human silhouettes from noisy background and compute depth silhouette area for each activity to track human movements in a scene. Several representative features, including invariant, depth sequential silhouettes and spatiotemporal body joints features were fused together to explore gradient orientation change, intensity differentiation, temporal variation and local motion of specific body parts.
+    2-2:benchmark depth datasets: MSRDailyActivity3D and IM-DailyDepthActivity
+    2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
+    2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
+~~~
 
+#### topic7:(2018)Depth-based human activity recognition: A comparative perspective study on feature extraction
+
+Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
+
+~~~ python
+
+~~~
 
 
 
