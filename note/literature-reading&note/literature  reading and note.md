@@ -75,7 +75,8 @@
     12."semantic define":Generally, semantics refers to what the sender and receiver of a
 message mean and how they infer the context of the message. Semantics is the study of meaning.
 In action recognition, the semantic understanding enables users to apply prior knowledge to the recognition process.
-	13."deep belief network"(DBN):
+    13."deep belief network"(DBN):
+    14.depth map images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
 ~~~
 
 #### idea
@@ -252,7 +253,15 @@ Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
 Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
 
 ~~~ python
-
+1.primary thesis:
+    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.
+2.Critical components of the argument that support the thesis:
+    2-1: feature extraction aproaches
+        1.3D point features(interest point) 
+3.method & dataset
+The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
+While combining depth and color features on "RGBD-HuDaAct" Dataset
+4.idea&key
 ~~~
 
 
