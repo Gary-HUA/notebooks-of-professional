@@ -62,7 +62,7 @@
 ~~~python
 ---basic concepts:
     1 "HAR systems" attempt to automatically analyze and recognize such HAs using the acquired information from the various types of sensors
-    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,video retrieval,entertainment,education,abnormal activity identification,health care,+
+    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,video retrieval,entertainment,education,abnormal activity identification,health care,
     3."activity type":human activity have an inherent hierarchical structure that indicates the different levels of it,which can be considered as a three level categorization.first:for the bottom level, there is an atomic element and these action primitives constitute more complex human activity.  after action primitive level, the action/activity comes as the second level. finally ,the complex interaction from the top level,which refers to the human activity that involve more than two persons and objects.
     4. "acquired device": sensors with RGB,range,radar,or wearable sensors,
     5."human activity recognition(HAR)":aims to recognition activity from a series of observations on the action of subjects and the environmental conditions.
