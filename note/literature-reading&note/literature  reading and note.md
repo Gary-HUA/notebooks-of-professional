@@ -38,7 +38,7 @@
     SURF:speed-up robust feature
     CRFS:conditional random fields
     DBNs:deep belief networks
-    
+    SOM:self-organizing Map
     
     
     
