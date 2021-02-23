@@ -37,7 +37,7 @@
     SIFT:scale-invariant feature transform
     SURF:speed-up robust feature
     CRFS:conditional random fields
-    
+    DBNs:deep belief networks
     
     
     
@@ -62,8 +62,8 @@
 ~~~python
 ---basic concepts:
     1 "HAR systems" attempt to automatically analyze and recognize such HAs using the acquired information from the various types of sensors
-    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,video retrieval,entertainment,education,abnormal activity identification,health care,+
-    3."activity type":human activity have an inherent hierarchical structure that indicates the different levels of it,which can be considerd as a three level categorization.first:for the bottom level, there is an atomic element and these action primitives constitute more complex human activity.  after action primitive level, the action/activity comes as the second level. finally ,the complex interaction from the top level,which refers to the human activity that involve more than two persons and objects.
+    2."application fields of HAR":HCI,VR,security,video surveillance,home monitoring,processes in industry,devices control,extraction of information from video,robotics,video game,medical environments patient moniting,video retrieval,entertainment,education,abnormal activity identification,health care,
+    3."activity type":human activity have an inherent hierarchical structure that indicates the different levels of it,which can be considered as a three level categorization.first:for the bottom level, there is an atomic element and these action primitives constitute more complex human activity.  after action primitive level, the action/activity comes as the second level. finally ,the complex interaction from the top level,which refers to the human activity that involve more than two persons and objects.
     4. "acquired device": sensors with RGB,range,radar,or wearable sensors,
     5."human activity recognition(HAR)":aims to recognition activity from a series of observations on the action of subjects and the environmental conditions.
     6."global representation": global representation extract global descriptors directly from original videos or iamges and encode them as a whole feature.
@@ -75,6 +75,8 @@
     12."semantic define":Generally, semantics refers to what the sender and receiver of a
 message mean and how they infer the context of the message. Semantics is the study of meaning.
 In action recognition, the semantic understanding enables users to apply prior knowledge to the recognition process.
+    13."deep belief network"(DBN):
+    14.depth map images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
 ~~~
 
 #### idea
@@ -85,6 +87,12 @@ In action recognition, the semantic understanding enables users to apply prior k
 	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+手，的配合 >
 	local feature(partial of body , the main aim is arm+hand , and leg ,head)
 	classification/identifacation :head+arm,arm+leg,
+~~~
+
+#### dataset
+
+~~~python
+
 ~~~
 
 
@@ -226,9 +234,35 @@ Author: Allah Bux Sargano 1,2,*, Plamen Angelov 1 and Zulfiqar Habib
     
 ~~~
 
+#### topic6:(2015)Depth Silhouettes Context: A New Robust Feature for Human Tracking and Activity Recognition based on Embedded HMMs
 
+Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
 
+~~~python
+1.primary thesis:
+    in this paper,a video-based novel approach for human activity recognition is presented using robust hybrid feature and emmbedded HMMs
+2.Critical components of the argument that support the thesis:
+    2-1:In the proposed HAR framework, depth maps are analyzed by temporal motion identification method to segment human silhouettes from noisy background and compute depth silhouette area for each activity to track human movements in a scene. Several representative features, including invariant, depth sequential silhouettes and spatiotemporal body joints features were fused together to explore gradient orientation change, intensity differentiation, temporal variation and local motion of specific body parts.
+    2-2:benchmark depth datasets: MSRDailyActivity3D and IM-DailyDepthActivity
+    2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
+    2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
+~~~
 
+#### topic7:(2018)Depth-based human activity recognition: A comparative perspective study on feature extraction
+
+Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
+
+~~~ python
+1.primary thesis:
+    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.
+2.Critical components of the argument that support the thesis:
+    2-1: feature extraction aproaches
+        1.3D point features(interest point) 
+3.method & dataset
+The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
+While combining depth and color features on "RGBD-HuDaAct" Dataset
+4.idea&key
+~~~
 
 
 
