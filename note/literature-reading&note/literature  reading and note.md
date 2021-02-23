@@ -38,8 +38,8 @@
     SURF:speed-up robust feature
     CRFS:conditional random fields
     DBNs:deep belief networks
-    
-    
+    ROP:Random Occupancy Pattern
+    HON4D:“Histogram of oriented 4D surface normals
     
     
     
@@ -77,16 +77,18 @@ message mean and how they infer the context of the message. Semantics is the stu
 In action recognition, the semantic understanding enables users to apply prior knowledge to the recognition process.
     13."deep belief network"(DBN):
     14.depth map images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
+    15. "3D point feature(BOPS bag of points)":“Interest points” extracted from 2D-images can be employed for applications like image retrieval, and video classification.One limitation of 3D points (BOPs) features approach is the missing of space features between the interest points.it may not be reliable because of noise and occlu- sions in the depth maps, the silhouettes perspectives from the top, and the side views. It is hard to sample the interest points robustly given the geometry and movement varieties over various people.
+    16."STIP":The extension of interest points from 2D images into 3D is Space-Time Interest Points (STIP) [17] which is mostly used for action or activity recognition. The popular “STIP” descriptors include the “cuboid detector”, “HOG HOF”, “HOG3D” and “extended SURF”.
+    17."Random Occupancy Pattern (ROP) features":which extracted from sampled 4D sub-volumes with various sizes and at various locations in Fig. 5.To handle the issues of noise and occlusion, depth-maps are represented in 4D sub- stitute of a three-dimensional movement succession. The ROP features are robust to noise when they are extricated at a bigger scale.
+   18."Depth silehouette":Motivated by the large success of silhouette that provides
+the shape information of human activities. “Depth silhouettes” demonstrate discernable parts besides to the shape information while “Binary silhouettes” contain less information because of its pixel intensity values distribution over the human body just shape information is available as demonstrated 
+
 ~~~
 
 #### idea
 ~~~idea
----idea: A suppose: how accuracy and easier extract/represent an activity.
-1. 动作的组成: 一个人的动作是由头,脖子,胳膊, 手,腿,脚等部分组合而成的,简单的就是H+A,A+L的组合构成.
-	如果我们对人的动作进行分解,那么在行为检测和获取的时候,通过不同部分的检测组合识别,那么可以对动作进行更加精准的识别和分类.单个人得动作组合有他个人得习惯特性.不同人得动作具有相似性.我们通过对动作的组合检测.会不会由更高的识别率和分类准确度. 分离检测会不会更加高效相对于整理复杂计算.
-	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+手，的配合 >
-	local feature(partial of body , the main aim is arm+hand , and leg ,head)
-	classification/identifacation :head+arm,arm+leg,
+---idea: A suppose: how accuracy and easier extract/represent an action features.
+
 ~~~
 
 #### dataset
@@ -258,9 +260,15 @@ Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
 2.Critical components of the argument that support the thesis:
     2-1: feature extraction aproaches
         1.3D point features(interest point) 
+        2.Spatialetemporal cuboid(立方体) descriptors
+        3.Random Occupancy Pattern (ROP) features
+        4.Depth silhouette
+        5.Surface normals features
+        6.Depth and color features
 3.method & dataset
 The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
 While combining depth and color features on "RGBD-HuDaAct" Dataset
+
 4.idea&key
 ~~~
 
