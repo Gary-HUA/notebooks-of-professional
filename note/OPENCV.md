@@ -1695,6 +1695,43 @@ cap.release()
 cv.destroyAllWindows()
 ~~~
 
+### HAR SYSTEM
+
+~~~python
+import cv2 as cv
+import numpy as np
+
+def pre_process(image):  # pre-processing
+    blur = cv.medianBlur(image, 5)
+    # opening operation for nosing
+    kernel = np.ones((3,3),np.uint8)
+    opening = cv.morphologyEx(blur,cv.MORPH_OPEN,kernel)
+    return opening
+
+
+kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
+fgbg = cv.bgsegm.createBackgroundSubtractorGMG()  # shadow be detected
+src = cv.VideoCapture(0)  # acquire camera information
+while True:
+    ret, frame = src.read()
+    frame = cv.flip(frame, 1)  # mirror
+    fgmask = fgbg.apply(frame)  # background model
+    fgmask = cv.morphologyEx(fgmask, cv.MORPH_OPEN, kernel)  # contous model
+    fgmask = pre_process(fgmask)
+    contous, hierarchy = cv.findContours(fgmask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)  # contous detecting
+    for c in contous:
+        perimeter = cv.arcLength(c, True)
+        if perimeter > 500:  # set-up parameter to decrease noise
+            x,y,w,h = cv.boundingRect(c)
+            cv.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    cv.imshow("frame", frame)
+    cv.imshow("fgmask", fgmask)
+    if cv.waitKey(50) & 0xff == 27:
+        break
+src.release()
+cv.destroyAllWindows()
+~~~
+
 
 
 
