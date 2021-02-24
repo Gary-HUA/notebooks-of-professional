@@ -39,7 +39,7 @@
     CRFS:conditional random fields
     DBNs:deep belief networks
     SOM:self-organizing Map
-    
+    GDA:generalized discriminant analysis
     
     
     
@@ -70,13 +70,16 @@
     7."local representations":they focus on specific local patches which are determined by interest point detectors or densely sampling.most existing local features are proved to be robust against noise and partial occlusions comparing to global feature.
     8."human tracking":besides the activity calssification approaches,another critical research area is the human tracking approach,whch is concerned in video surveillance systems for suspicious behavior detection.for analyzing human behaviors and identifying potential unsafe or abnormal situations.
     9."sigle-layer method":single layer method present and recognition human activity directly based on sequence images.
+      "hierarchical approaches"hierarchical approaches recognize more complex activities by decomposing them into simple activities (sub-events)
     10."hierarchical layer method":describe high-level human activity by using simple activity called sub-event which are suitable for the  analysis of complex activity.
     11."semantic space":include human knowledge about activity such as body part(pose/poselet),object,scene,and attribute feature. we categorize semantic method into three categorise:method based on body part,method based on scene/object,method based on attributes.
     12."semantic define":Generally, semantics refers to what the sender and receiver of a
 message mean and how they infer the context of the message. Semantics is the study of meaning.
 In action recognition, the semantic understanding enables users to apply prior knowledge to the recognition process.
     13."deep belief network"(DBN):
-    14.depth map images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
+    14."depth map" images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
+    15."random forests(RFs)"RF is a classifier combination that uses Decision Tree (DT)-based classifiers where every DT is made by randomly selecting the data from the available data.
+    16."HMM":An HMM can be explained as a stochastic finite-state machine that can be used to model time sequential information. Basically, there are four major parts in a typical HMM: namely states, initial state distribution, state transition matrix, and state observation matrix. A state represents a property or condition that an HMM may have during a particular time. Initial state distribution indicates initially state probability ofan HMM. The state transition matrix characterizes the probabilities among the states and the observation matrix contains the observation probabilities from each state. Once the architecture ofan HMM is defined with the four components, the next step is to train the HMM. To train, the first step is to classify features into a specific number of clusters, generating a codebook consisting of the cluster centroids. Then from the codebook, symbol sequences are generated through vector quantization. These symbol sequences later are used to model sequential patterns in an HMM.
 ~~~
 
 #### idea
@@ -89,7 +92,88 @@ In action recognition, the semantic understanding enables users to apply prior k
 	classification/identifacation :head+arm,arm+leg,
 ~~~
 
-#### dataset
+#### framework
+
+~~~python
+1.primary thesis:
+2.Critical components of the argument that support the thesis:  
+3.method & dataset
+4.idea&key
+~~~
+
+#### topic:(2015)Depth Silhouettes Context: A New Robust Feature for Human Tracking and Activity Recognition based on Embedded HMMs
+
+Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
+
+~~~python
+1.primary thesis:
+    in this paper,a video-based novel approach for human activity recognition is presented using robust hybrid feature and emmbedded HMMs
+2.Critical components of the argument that support the thesis:
+    2-1:In the proposed HAR framework, depth maps are analyzed by temporal motion identification method to segment human silhouettes from noisy background and compute depth silhouette area for each activity to track human movements in a scene. Several representative features, including invariant, depth sequential silhouettes and spatiotemporal body joints features were fused together to explore gradient orientation change, intensity differentiation, temporal variation and local motion of specific body parts.
+    2-2:benchmark depth datasets: MSRDailyActivity3D and IM-DailyDepthActivity
+    2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
+    2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
+~~~
+
+#### topic:(2016)Fuzzy Logic Based Human Activity Recognition in Video Surveillance Applications
+
+Slim Abdelhedi, Ali Wali and Adel M. Alimi
+
+~~~python
+1.primary thesis:
+    This paper is focused on the design and implementation of a Human activity analysis system. The multiple cameras sends captured frames to the monitoring system via the local network. Through the use of human silhouette, acquired from a smart camera, a shape representation of the human beings was built in real-time and a fuzzy logic inference system was developed for fall detection
+2.Critical components of the argument that support the thesis: 
+    1-1:background subtraction for motion detection
+        (1)the Type-2 Fuzzy Gaussian Mixture Models (T2 FGMMs) algorithm [1] was applied to extract foreground images.we used mor- phological operators and filtering methods to obtainmore accurate results
+        (2)human detection and tracting.measuring the information of the human silhouette used the bounding box
+        (3)Mamdanis fuzzy inference methoh
+3.method & dataset
+4.idea&key
+~~~
+
+
+
+#### topic:(2016)Multi‑view human activity recognition based on silhouette and uniform rotation invariant local binary patterns
+
+Alok Kumar Singh Kushwaha1 · Subodh Srivastava1 · Rajeev Srivastava1
+
+~~~python
+1.primary thesis:
+In this paper, a system framework has been presented to recognize a view invariant human activity recognition approach that uses both contour-based pose features from silhouettes and uniform rotation local binary patterns for view invariant activity representation.
+2.Critical components of the argument that support the thesis: 
+    2-1：the framework is composed of three consecutive medules:
+    (1) detecting and locating people by background subtraction
+    (2) combined scale invariant contour-based pose features from silhouettes and uniform rotation invariant local binary patterns (LBP) are extracted, and 
+    (3) finally classifying activities of people by Multiclass Support vector machine (SVM) classifier.
+    
+3.method & dataset 
+VideoWeb Multi-view dataset, i3DPost multi-view dataset , and WVU multi-view human action recogni- tion dataset .
+4.idea&key # multi-view view invariant activity representation 
+~~~
+
+#### topic:(2016)Human activity recognition using segmented body part and body joint features with hidden Markov models
+
+Md. Zia Uddin1
+
+~~~python
+1.primary thesis:
+    in this paper,A novel approach is proposed here for depth video based human activity recognition, using joint-based spatiotemporal features of depth body shapes and hidden Markov models. 
+2.Critical components of the argument that support the thesis:  
+    The proposed approach consists of video acquisition, segmentation of body parts using a RF, feature generation, and modeling HMMs,the features are classified by generalized discriminant analysis (GDA) in order to make them more robust.
+    2-1:activity video acquisition via depth camera
+    2-2:the body shape extraction by depth threshold obtained empirically and background subtraction.(Gaussian mixture model)
+    2-3：human body parts segmentation from depth video."random forests"
+    2-4:feature generaion 3D body skeleton model  spatial feature extraction by joint pair contain polar angle and azimuthal angle
+    2-5:generalized discriminant analysis on the spatiotemporal feature(to classify the features .)
+    2-6：activity modeling via HMM
+3.method & dataset
+	MSR Daily Activity 3D dataset, MSR action 3D dataset,
+4.idea&key
+~~~
+
+#### topic(2016)Robust human activity recognition from depth video using spatiotemporal multi-fused features
+
+Ahmad Jalal a, Yeon-Ho Kim a, Yong-Joong Kim a, Shaharyar Kamal b, Daijin Kim
 
 ~~~python
 
@@ -97,7 +181,117 @@ In action recognition, the semantic understanding enables users to apply prior k
 
 
 
-#### topic 1:(2020)vision -based human activity recognition: a survey   
+#### topic:(2017)A Review on Human Activity Recognition Using Vision-Based Method
+
+Author: Shugang Zhang,1 Zhiqiang Wei,1 Jie Nie,2 Lei Huang,1 Shuang Wang,1 and Zhen Li
+
+~~~python
+1.primary thesis:
+    this review highlights the advances of state of art activity recognition approaches,especially for the activity representation and classification methods.
+2.Critical components of the argument that support the thesis:
+    2-1:global representation:2D sulhouettes and shapes,optical flow,3D space-time volumes(STVs), discrete Fourier transform,
+    2-2:local representation:BOVW,STIP(2D/3D),further exploration VQ,SA-K,LLC,FV,VLAD,SVC
+    2-3:depth-based representation:representation based on depth map, skeleton-based representation(20/25joints)
+    2-4:activity classification approaches:
+            (1)template based approaches(template matching,dynamic time wraping,)
+            (2)generative models(HMMs,CHMMs,HSMM,dynamic Bayesian network(DBN),)
+            (3)discriminative models(support vector machine),
+            (4)conditional random fields(CRFS) 
+            (5)deep learning architectures:DNN,CNN,RNN,
+    2-5:Human tracking approaches: 
+            (1)filter-based tracking(kalma filter(KF),particle filter(PF))
+            (2)kernel-based tracking(or mean shift tracking):          
+                
+                
+                
+~~~
+
+#### topic(2017)A Comprehensive Review on Handcrafted and Learning-Based Action Representation Approaches for Human Activity Recognition
+
+Allah Bux Sargano 1,2,*, Plamen Angelov 1 and Zulfiqar Habib 2 1
+
+~~~ python
+1.primary thesis:
+    Recently, with the emergence and successful deployment of deep learning techniques for image classification, researchers have migrated from traditional handcrafting to deep learning techniques for HAR.This review paper presents a comprehensive survey of both handcrafted and learning-based action representations, offering comparison, analysis, and discussions on these approaches.
+2.Critical components of the argument that support the thesis:  
+    2-1：The handcrafted representation-based approach mainly follows the bottom-up strategy for HAR.Generally, it consists of three major phases (foreground detection, handcrafted feature extraction and representation, and classification.Different taxonomies have been used in the survey papers to discuss the HAR approaches. A survey presented in [1], divides the activity recognition approaches into two major categories: single layered approaches and hierarchical approaches.Single-layered approaches recognize the simple activities from the sequence of a video, while hierarchical approaches recognize more complex activities by decomposing them into simple activities (sub-events).                                                                                                                                        2-2:Handcrafted Representation-Based Approach
+          ()Space-Time-Based Approaches                                                                                                               (1)Space-Time Volumes (STVs) 
+          	(2)Space-Time Trajectory Trajectory-based                                                                                                 (3)Space-Time Features
+          ()Appearance-Based Approaches                                                                                                               (1)Shape-Based Approaches
+            (2)Motion-Based Approaches                                                                                                               (3)Hybrid Approaches                                                                                                                   ()other approaches
+             (1)Local Binary Pattern (LBP)-Based Approaches                                                                                            (2)Fuzzy Logic-Based Approaches Traditional
+                                                                                                                                                  2-3:Learning-Based Action Representation Approach 
+         	(1)Non-Deep Learning-Based Approaches
+              (1-1) Dictionary Learning-Based Approaches                                                                                               (1-2) Genetic Programming  
+            (2)Deep Learning-Based Approaches Recent
+               (2-1)Generative/Unsupervised Models                                                                                                      (2-1)Discriminative/Supervised Models                              
+3.method & dataset                                                                                                                                       
+4.idea&key this paper introduction variant handcrafted/learning approaches.after that,it is dataset and application.it is a review that important and comprehensive
+~~~
+
+
+
+#### topic:(2018)Depth-based human activity recognition: A comparative perspective study on feature extraction
+
+Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
+
+~~~ python
+1.primary thesis:
+    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.moreover,wo discuss the state of art datasets and subsequent classification procedure.
+2.Critical components of the argument that support the thesis:
+    2-1: feature extraction aproaches
+        1.3D point features(interest point) 
+        2.Spatialetemporal cuboid(立方体) descriptors
+        3.Random Occupancy Pattern (ROP) features
+        4.Depth silhouette
+        5.Surface normals features
+        6.Depth and color features
+3.method & dataset
+The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
+While combining depth and color features on "RGBD-HuDaAct" Dataset
+
+4.idea&key
+# compare different feafures extraction techinques. utilize advantage to processing a easier and more accuracy techique
+~~~
+
+#### topic:(2019)A Survey on Vision Based Activity Recognition, its Applications and Challenges
+
+Author: Ashwin Geet D’Sa, Dr. B G Prasad
+
+~~~python
+1.primary thesis:
+    here is an paper that introduce advantage and challenge in human activity recognition of computer vision.
+2.Critical components of the argument that support the thesis:
+   2-1: type of activity recognition based on the device used:
+        (1)sensor based activity recognition
+        (2)vision based activity recognition
+        (3)human activity recognition based on complexity(gesture,action,interaction,group activity)
+        (4)type os vision based activity recognition based on perspective(first-person/third-person perspective
+        (5)type of activity recognition based on approaches(single-layer,hierarchical approach)
+   2-2:application of activity recognition:
+       (1)behavior bio-metrics
+       (2)content based video analysis                                                                      (3)security and suveillance 
+       (4)interaction application and environment
+       (5)animation and synthesis
+       (6)healthcare system
+       (7)rehabilitation application                                                                    2-3:challenge in vision based HAR
+       (1)human behavior
+       (2)intra class variability                                                                   
+       (3)inter class similarity                                                                   
+       (4)illumination change                                                                   
+       (5)shadow effect                                                                  
+       (6)partial or full occlusions                                                                 
+       (7)self occlusions
+       (8)scaling
+       (9)bootstrapping
+       (10)camera jitter                                                                   
+       (11)camera automatic adjustment                                                               
+       (12)noise frame in video                                                                  
+       (13)camouflage                                                                   
+       (14)moving background objects or human                                                                                                                    
+~~~
+
+#### topic :(2020)vision -based human activity recognition: a survey   
 
 Author: Djamila Romaissa Beddiar1,3 Abdenour Hadid3· Brahim Nini1 · Mohammad Sabokrou2 ·Abdenour Hadid3
 
@@ -137,7 +331,7 @@ Author: Djamila Romaissa Beddiar1,3 Abdenour Hadid3· Brahim Nini1 · Mohammad S
          
 ~~~
 
-#### topic 2:(2020)A survey on video‑based Human Action Recognition: recent updates, datasets, challenges, and applications
+#### topic :(2020)A survey on video‑based Human Action Recognition: recent updates, datasets, challenges, and applications
 
 Author: Preksha Pareek1 · Ankit Thakkar1
 
@@ -161,123 +355,7 @@ Author: Preksha Pareek1 · Ankit Thakkar1
     
 ~~~
 
-#### topic3:(2017)A Review on Human Activity Recognition Using Vision-Based Method
-
-Author: Shugang Zhang,1 Zhiqiang Wei,1 Jie Nie,2 Lei Huang,1 Shuang Wang,1 and Zhen Li
-
-~~~python
-1.primary thesis:
-    this review highlights the advances of state of art activity recognition approaches,especially for the activity representation and classification methods.
-2.Critical components of the argument that support the thesis:
-    2-1:global representation:2D sulhouettes and shapes,optical flow,3D space-time volumes(STVs), discrete Fourier transform,
-    2-2:local representation:BOVW,STIP(2D/3D),further exploration VQ,SA-K,LLC,FV,VLAD,SVC
-    2-3:depth-based representation:representation based on depth map, skeleton-based representation(20/25joints)
-    2-4:activity classification approaches:
-            (1)template based approaches(template matching,dynamic time wraping,)
-            (2)generative models(HMMs,CHMMs,HSMM,dynamic Bayesian network(DBN),)
-            (3)discriminative models(support vector machine),
-            (4)conditional random fields(CRFS) 
-            (5)deep learning architectures:DNN,CNN,RNN,
-    2-5:Human tracking approaches: 
-            (1)filter-based tracking(kalma filter(KF),particle filter(PF))
-            (2)kernel-based tracking(or mean shift tracking):          
-                
-                
-                
-~~~
-
-#### topic4:(2019)A Survey on Vision Based Activity Recognition, its Applications and Challenges
-
-Author: Ashwin Geet D’Sa, Dr. B G Prasad
-
-~~~python
-1.primary thesis:
-    here is an paper that introduce advantage and challenge in human activity recognition of computer vision.
-2.Critical components of the argument that support the thesis:
-   2-1: type of activity recognition based on the device used:
-        (1)sensor based activity recognition
-        (2)vision based activity recognition
-        (3)human activity recognition based on complexity(gesture,action,interaction,group activity)
-        (4)type os vision based activity recognition based on perspective(first-person/third-person perspective
-        (5)type of activity recognition based on approaches(single-layer,hierarchical approach)
-   2-2:application of activity recognition:
-       (1)behavior bio-metrics
-       (2)content based video analysis                                                                      (3)security and suveillance 
-       (4)interaction application and environment
-       (5)animation and synthesis
-       (6)healthcare system
-       (7)rehabilitation application                                                                    2-3:challenge in vision based HAR
-       (1)human behavior
-       (2)intra class variability                                                                   
-       (3)inter class similarity                                                                   
-       (4)illumination change                                                                   
-       (5)shadow effect                                                                  
-       (6)partial or full occlusions                                                                 
-       (7)self occlusions
-       (8)scaling
-       (9)bootstrapping
-       (10)camera jitter                                                                   
-       (11)camera automatic adjustment                                                               
-       (12)noise frame in video                                                                  
-       (13)camouflage                                                                   
-       (14)moving background objects or human                                                                                                                    
-~~~
-
-#### topic5:(2017)A Comprehensive Review on Handcrafted and Learning-Based Action Representation Approaches for Human Activity Recognition
-
-Author: Allah Bux Sargano 1,2,*, Plamen Angelov 1 and Zulfiqar Habib 
-
-~~~python
-1.primary thesis:
-    This review paper presents a comprehensive survey of both handcrafted and learning-based action representations, offering comparison, analysis, and discussions on these approaches.and public dataset
-2.Critical components of the argument that support the thesis:
-    
-~~~
-
-#### topic6:(2015)Depth Silhouettes Context: A New Robust Feature for Human Tracking and Activity Recognition based on Embedded HMMs
-
-Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
-
-~~~python
-1.primary thesis:
-    in this paper,a video-based novel approach for human activity recognition is presented using robust hybrid feature and emmbedded HMMs
-2.Critical components of the argument that support the thesis:
-    2-1:In the proposed HAR framework, depth maps are analyzed by temporal motion identification method to segment human silhouettes from noisy background and compute depth silhouette area for each activity to track human movements in a scene. Several representative features, including invariant, depth sequential silhouettes and spatiotemporal body joints features were fused together to explore gradient orientation change, intensity differentiation, temporal variation and local motion of specific body parts.
-    2-2:benchmark depth datasets: MSRDailyActivity3D and IM-DailyDepthActivity
-    2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
-    2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
-~~~
-
-#### topic7:(2018)Depth-based human activity recognition: A comparative perspective study on feature extraction
-
-Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
-
-~~~ python
-1.primary thesis:
-    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.moreover,wo discuss the state of art datasets and subsequent classification procedure.
-2.Critical components of the argument that support the thesis:
-    2-1: feature extraction aproaches
-        1.3D point features(interest point) 
-        2.Spatialetemporal cuboid(立方体) descriptors
-        3.Random Occupancy Pattern (ROP) features
-        4.Depth silhouette
-        5.Surface normals features
-        6.Depth and color features
-3.method & dataset
-The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
-While combining depth and color features on "RGBD-HuDaAct" Dataset
-
-4.idea&key
-# 
-~~~
-
-
-
-
-
-
-
-
+#### 
 
 
 
