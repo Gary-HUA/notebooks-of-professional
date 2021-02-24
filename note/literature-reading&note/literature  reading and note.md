@@ -254,14 +254,21 @@ Author: Heba Hamdy Ali a,*, Hossam M. Moftah a, Aliaa A.A. Youssif b
 
 ~~~ python
 1.primary thesis:
-    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.
+    In this study, we introduce a detailed study of current advances in the depth maps-based image representations and feature extraction process.moreover,wo discuss the state of art datasets and subsequent classification procedure.
 2.Critical components of the argument that support the thesis:
     2-1: feature extraction aproaches
         1.3D point features(interest point) 
+        2.Spatialetemporal cuboid(立方体) descriptors
+        3.Random Occupancy Pattern (ROP) features
+        4.Depth silhouette
+        5.Surface normals features
+        6.Depth and color features
 3.method & dataset
 The proposed methods are evaluated on three depth-based datasets "MSR Action 3D", "MSR Hand Gesture", and "MSR Daily Activity 3D".
 While combining depth and color features on "RGBD-HuDaAct" Dataset
+
 4.idea&key
+# 
 ~~~
 
 
