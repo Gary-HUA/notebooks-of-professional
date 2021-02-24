@@ -1708,20 +1708,20 @@ def pre_process(image):  # pre-processing
     opening = cv.morphologyEx(blur,cv.MORPH_OPEN,kernel)
     return opening
 
-
 kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
 fgbg = cv.bgsegm.createBackgroundSubtractorGMG()  # shadow be detected
-src = cv.VideoCapture(0)  # acquire camera information
+src = cv.VideoCapture("../HAR/KTH_walking.avi")  # acquire KTH video information
 while True:
     ret, frame = src.read()
     frame = cv.flip(frame, 1)  # mirror
+    pre_process(frame)
     fgmask = fgbg.apply(frame)  # background model
     fgmask = cv.morphologyEx(fgmask, cv.MORPH_OPEN, kernel)  # contous model
     fgmask = pre_process(fgmask)
     contous, hierarchy = cv.findContours(fgmask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)  # contous detecting
     for c in contous:
         perimeter = cv.arcLength(c, True)
-        if perimeter > 500:  # set-up parameter to decrease noise
+        if perimeter > 30:  # set-up parameter to decrease noise
             x,y,w,h = cv.boundingRect(c)
             cv.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
     cv.imshow("frame", frame)
