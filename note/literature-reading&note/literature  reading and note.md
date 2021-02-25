@@ -80,6 +80,7 @@ In action recognition, the semantic understanding enables users to apply prior k
     14."depth map" images may contain occlusions, which make the global features unsettled. Additionally, contrasted with color images, the depth images do not have texture but it difficult to apply local differential operators like gradients on because they are generally too noisy in both spatial and tem- poral cases.
     15."random forests(RFs)"RF is a classifier combination that uses Decision Tree (DT)-based classifiers where every DT is made by randomly selecting the data from the available data.
     16."HMM":An HMM can be explained as a stochastic finite-state machine that can be used to model time sequential information. Basically, there are four major parts in a typical HMM: namely states, initial state distribution, state transition matrix, and state observation matrix. A state represents a property or condition that an HMM may have during a particular time. Initial state distribution indicates initially state probability ofan HMM. The state transition matrix characterizes the probabilities among the states and the observation matrix contains the observation probabilities from each state. Once the architecture ofan HMM is defined with the four components, the next step is to train the HMM. To train, the first step is to classify features into a specific number of clusters, generating a codebook consisting of the cluster centroids. Then from the codebook, symbol sequences are generated through vector quantization. These symbol sequences later are used to model sequential patterns in an HMM.
+    17:"forward spotting":the human activity or non-activity is segmented in the input sequence using forward spotting. A sliding window technique is used which computes the observation probability of activity or non-activity using a number of continuing observations within the sliding window,
 ~~~
 
 #### idea
@@ -176,7 +177,38 @@ Md. Zia Uddin1
 Ahmad Jalal a, Yeon-Ho Kim a, Yong-Joong Kim a, Shaharyar Kamal b, Daijin Kim
 
 ~~~python
+1.primary thesis:
+    we propose novel multi-fused features for online human activity recognition (HAR) system that recognizes human activities from continuous sequences of depth map via  the depth sensor.The proposed online HAR system segments human depth silhouettes using temporal human motion information as well as it obtains human skeleton joints using spatiotemporal human body information.it extracts multi-fused features that consist of four skeleton joint features.and one body shape feature. 
+2.Critical components of the argument that support the thesis:
+    2-1:"feature extration based on multi-fused features",we urilized person specific body part model 15 3D body joints.then extract four skeleton joint features that include torso-bassed distance feature,key-joint based distance feature,spatiotemporal magnitude feature,and spatiotemporal directional angle feature.
+     2-2:"Body shape feature"   we propose the other spatiotemporal body shape feature that is based on the depth differential silhouettes (DDS) between two consecutive frames.The depth differential silhouettes (DDS) can be considered as an effective feature that uses the full-body shape information along with motion information from depth silhouettes.
+    2-3:"Determining of codebook size"the human activity image is represented by the multi-fused features that combines four skeleton joint features and one body shape feature.The codebook contains the prototype code vectors that are generated from the training fea- ture vectors using vector quantization (VQ) [29]. While, the co- debook size is determined as 128 experimentally using k-mean clustering algorithm
+    2-4:"The continuous human activity recognition":The proposed simultaneous activity segmentation and recognition consists of two concurrent modules: the activity segmentation module (i.e., forward spotting) and activity re-cognition module (i.e., accumulative HMMs).
+     First, the activity segmentation module computes the competitive differential ob- servation probability ϕ( )t and detects the start point of an activity. Then, it activates the activity recognition module, which performs the recognition task until it receives the activity end signa Existing activity segmentation and HMM models [43,44] need to detect the end point of each sequence. trace back to the start point and send the extracted data to HMMs,It inevitably causes a major time delay, repetition of data, segmentation ambiguities,       we proposed "forward spotting and accumulative HMMs" that segmented some meaningful activities in the forward manner, which enabled continuous modeling and testing over on-going video sequences without any time delay.
+    2-5:"Activity recognition using accumulative HMMs"apply the segment to all activity HMMs. Let an observed activity segment be ={ … }
+O oo o,, ,tt te , where ts and te denote the s s+1 见图
+start and end points of activity, respectively. Then,
+3.method & dataset
+IM-Daily- DepthActivity, MSRAction3D and MSRDailyActivity3D
+Furthermore, we proposed to use the forward spotting scheme that differentiates the observation probability between activity and non-activity, in or- der to segment and recognize random activities during online con- tinuous activity recognition without any time delay，we will improve the effectiveness of our multi- fused features by adding the color information. Besides, we also used the features for more complicated activities including human–object interactions or multi-person interactions.
+Acknowledgments
+4.idea&key
+in this paper,the HAR system utilize multi-fused feature  include skeletion joint,silhouette shape feature, through segmen and detect motion by forward spotting from start to end,put in accumulative HMM to recognition .
+~~~
 
+#### topic:(2016)A Depth Camera-based Human Activity Recognition via Deep Learning Recurrent Neural Network for Health and Social Care Services
+
+S. U. Parka, J. H. Parka, M. A. Al-masnia, M. A. Al-antaria, Md. Z. Uddinb, T. -S. Kima*
+
+~~~ python
+1.primary thesis:
+    In this paper, we propose a new HAR system via Recurrent Neural Network (RNN) which is one of deep learning algorithms.We utilize joint angles from multiple body joints changing in time which are represented a spatiotemporal feature matrix (i.e., multiple body joint angles in time). With these derived features,
+2.Critical components of the argument that support the thesis:  
+	In this section, we introduce our RNN-based HAR system. Our HAR system proceeds to the following steps.First, we create an input feature matrix of joint angles computed from the MSRC-12 activity dataset13. Second, we train RNN with the training feature matrix. Third, we evaluate the trained RNN with test data sets by recognizing twelve human activities. The recognition performance is compared to the results from the conventional HMM- and DBN-based HAR systems.
+    2-1:
+3.method & dataset
+We have evaluated the HAR systems using the MSRC-12 dataset.
+4.idea&key
 ~~~
 
 
