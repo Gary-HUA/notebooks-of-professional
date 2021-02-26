@@ -509,6 +509,37 @@ plt.show()
 
 ~~~
 
+#### 图像色彩空间
+
+~~~ python
+通过颜色进行对象提取 
+现在我们知道如何将BGR图像转换为HSV，我们可以使用HSV色彩空间来提取彩色对象。在HSV中表示颜色比在BGR颜色空间中更容易。在我们的程序中，我们将尝试提取视频画面中的蓝色对象。下面是方法程序执行步骤：
+获取视频中的每一帧
+从BGR转换为HSV颜色空间
+我们为HSV图像设定一系列的蓝色阈值
+单独提取蓝色对象并显示，之后我们便可以对我们想要的图像做任何事情
+import cv2 as cv
+import numpy as np
+cap = cv.VideoCapture(0)
+while(True):
+    ret,frame = cap.read()
+    hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)  # transform rgb to hsv
+    # define color range
+    low_blue = np.array([110,50,50])
+    hight_blue = np.array([130,255,255])
+    # mask range of color
+    mask = cv.inRange(hsv,low_blue,hight_blue)
+    res = cv.bitwise_and(frame, frame, mask=mask)
+    cv.imshow("frame", frame)
+    cv.imshow("result", res)
+    k = cv.waitKey(5) & 0xff
+    if k == 27:
+        break
+cap.release()
+cv.destroyAllWindows()
+
+~~~
+
 
 
 ### 给图像加椒盐噪声代码
@@ -871,7 +902,12 @@ cv.destroyAllWindows()
   **返回值**
 
   - contours 是一个list，list中每个元素都是图像中的一个轮廓，用numpy中的ndarray表示
+  
   - hierarchy 是一个ndarray，其中的元素个数和轮廓个数相同，每个轮廓contours[i]对应4个hierarchy元素hierarchy[i][0] ~hierarchy[i][3]，分别表示后一个轮廓、前一个轮廓、父轮廓、内嵌轮廓的索引编号，如果没有对应项，则该值为负数
+  
+  - ## 5. 凸包
+  
+    凸包看起来类似于轮廓近似，但它不是（两者在某些情况下可能提供相同的结果）。这里，`cv.convexHull()`函数检查曲线的凸性缺陷并进行修正。一般而言，凸曲线是总是凸出或至少平坦的曲线。如果它在内部膨胀，则称为凸性缺陷。例如，检查下面的手形图像。红线表示手的凸包。双面箭头标记显示凸起缺陷，即船体与轮廓的局部最大偏差。
 
 ~~~ python
 import cv2 as cv
@@ -914,7 +950,8 @@ cv2.contourArea(cnt)
 
 #周长，True表示闭合的
 cv2.arcLength(cnt,True)
-
+#外接边界矩形  直边矩形，
+"旋转矩形"这里，以最小面积绘制边界矩形，因此它也考虑旋转。使用的函数是cv.minAreaRect()。它返回一个Box2D结构，其中包含以下detals - (center(x，y)，(width，height)，rotation of rotation)。但要画这个矩形，我们需要矩形的4个角。它是由函数cv.boxPoints()获得的
 #  轮廓近似
 cv2.approxPolyDP(contour,epsilon,True) 把一条平滑的曲线曲折化
 参数
@@ -942,6 +979,25 @@ print(res1)
 x, y, w, h = cv.boundingRect(cnt)
 img = cv.rectangle(src, (x, y), (x+w, y+h), (0, 255, 0), 2)
 cv.imshow("res", img)
+cv.waitKey(0)
+cv.destroyAllWindows()
+# 旋转矩形
+import cv2 as cv
+import numpy as np
+img = cv.imread("E:/python_OpenCV lib/shape.jpg")
+img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+ret, bin_img = cv.threshold(img_gray,127,255,cv.THRESH_BINARY)
+contours,hierarchy = cv.findContours(bin_img,cv.RETR_TREE,cv.CHAIN_APPROX_SIMPLE)
+cnt = contours[1]
+# 一般外接矩形
+# x, y, w, h = cv.boundingRect(cnt)
+# img = cv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+# 最小旋转矩形
+rect = cv.minAreaRect(cnt)
+box = cv.boxPoints(rect)
+box = np.int0(box)
+cv.drawContours(img,[box],0,(0,255,0),2)
+cv.imshow("res",img)
 cv.waitKey(0)
 cv.destroyAllWindows()
 ~~~
@@ -1406,6 +1462,8 @@ res1 = cv.warpAffine(img, M, (rows, cols))
 cv.imshow("res1", res1)
 cv.waitKey(0)
 cv.destroyAllWindows()
+透视变换
+对于透视变换，需要一个3x3变换矩阵。即使在转换之后，直线仍是直线。要找到此变换矩阵，需要在输入图像上找4个点，以及它们在输出图像中的对应位置。在这4个点中，其中任意3个不共线。然后可以通过函数cv.getPerspectiveTransform找到变换矩阵，将cv.warpPerspective应用于此3x3变换矩阵
 
 ~~~
 
