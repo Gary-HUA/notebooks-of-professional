@@ -85,12 +85,7 @@ In action recognition, the semantic understanding enables users to apply prior k
 
 #### idea
 ~~~idea
----idea: A suppose: how accuracy and easier extract/represent an activity.
-1. 动作的组成: 一个人的动作是由头,脖子,胳膊, 手,腿,脚等部分组合而成的,简单的就是H+A,A+L的组合构成.
-	如果我们对人的动作进行分解,那么在行为检测和获取的时候,通过不同部分的检测组合识别,那么可以对动作进行更加精准的识别和分类.单个人得动作组合有他个人得习惯特性.不同人得动作具有相似性.我们通过对动作的组合检测.会不会由更高的识别率和分类准确度. 分离检测会不会更加高效相对于整理复杂计算.
-	depth iamge based segmentate body (head,arm,leg)<it is an important part of moveing bady,such as "eating"，it is associated by head,arm and hand with tools  吃饭的动作需要头，胳膊+手，的配合 >
-	local feature(partial of body , the main aim is arm+hand , and leg ,head)
-	classification/identifacation :head+arm,arm+leg,
+
 ~~~
 
 #### framework
@@ -115,6 +110,22 @@ Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
     2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
     2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
 ~~~
+
+#### topic:(2016)A Survey on Human Activity Recognition from Videos
+
+T.Subetha ,Dr.S.Chitrakala
+
+~~~ python
+1.primary thesis:
+This paper collectively summarizes and deciphers the various methodologies, challenges etc...This paper collectivelysummarizes and deciphers the various methodologies, challenges and issues of Human Activity Recognition systems. Variants of Human Activity Recognition
+various methodologies, challenges and issues of Human Activity Recognition systems. Variants of Human Activity Recognition systems such as Human Object Interactions and Human-Human Recognition systems. Variants of Human Activity Recognition systems such as Human Object Interactions and Human-Human Interactions are also explored. Various benchmarking datasets systems such as Human Object Interactions and Human-Human Interactions are also explored. Various benchmarking datasets and their properties are being explored. The Experimental
+Interactions are also explored. Various benchmarking datasets and their properties are being explored. The Experimental Evaluation of various papers are analyzed
+2.Critical components of the argument that support the thesis:  
+3.method & dataset
+4.idea&key
+~~~
+
+
 
 #### topic:(2016)Fuzzy Logic Based Human Activity Recognition in Video Surveillance Applications
 
@@ -214,6 +225,21 @@ vector from 28 to 17, which includes more than 99% of information of the frame. 
 We have evaluated the HAR systems using the MSRC-12 dataset.we have compared the accurarcy of  HAR based on HMM,DBN and RNN.
 4.idea&key it is compared the accuracy of HAR based on  HMM,DBN,RNN
 ~~~
+
+#### topic:(2017)Hidden Markov Model Based Human Activity Recognition using Shape and Optical Flow Based Features
+
+Maheshkumar H. Kolekar, Deba Prasad Dash
+
+~~~ python
+1.primary thesis:
+ In this paper shape and optical flow features are fused together and used for human activity recognition. Features extracted are found to be efficient as concluded by ANOVA test. Hidden Markov Model are generated for each activity.System is trained and tested in various indoor and outdoor environment. The method adapted is made shape and angle invariant. Accuracy achieved using least square support vector machine classifier is 80% for all activities. Hidden Markov Model resulted in better accuracy as compared to least square support vector machine classifier with accuracy of 100.00% for walking, 100.00% for hand waving, 90% for bending, 84.61% for running and 90% for side gallop activities. 100% accuracy is achieved in recognizing activity in different angle with respect to camera.
+2.Critical components of the argument that support the thesis:  
+    
+3.method & dataset
+4.idea&key
+~~~
+
+
 
 #### topic:(2017)Recent Advances in Video-Based Human Action Recognition using Deep Learning: A Review
 

@@ -1609,6 +1609,41 @@ cap.release()
 cv.destroyAllWindows()
 ~~~
 
+Lucas-Kanade 法是计算稀疏特征集的光流（上面的例子使用Shi-Tomasi 算法检测角点）。OpenCV 还提供了一种计算稠密光流的方法，它会计算图像中的所有点的光流。这是基于 Gunner_Farneback 的算法，2003年Gunner Farneback在“Two-Frame Motion Estimation Based on Polynomial Expansion”中对该算法进行了解释。 下面的例子就是使用上面的算法计算稠密光流。结果是一个带有光流向量（u，v）的双通道数组。通过计算我们能得到光流的大小和方向。我们使用颜色对结果进行编码以便于更好的观察。方向对应于 H（Hue）通道，大小对应于 V（Value）通道
+
+~~~ python
+import cv2 as cv
+import numpy as np
+
+cap = cv.VideoCapture(0)
+
+ret, frame1 = cap.read()
+prvs = cv.cvtColor(frame1,cv.COLOR_BGR2GRAY)
+hsv = np.zeros_like(frame1)
+hsv[...,1] = 255
+
+while(1):
+    ret, frame2 = cap.read()
+    next = cv.cvtColor(frame2,cv.COLOR_BGR2GRAY)
+
+    flow = cv.calcOpticalFlowFarneback(prvs,next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+
+    mag, ang = cv.cartToPolar(flow[...,0], flow[...,1])
+    hsv[...,0] = ang*180/np.pi/2
+    hsv[...,2] = cv.normalize(mag,None,0,255,cv.NORM_MINMAX)
+    bgr = cv.cvtColor(hsv,cv.COLOR_HSV2BGR)
+
+    cv.imshow('frame2',bgr)
+    k = cv.waitKey(30) & 0xff
+    if k == 27:
+        break
+cap.release()
+cv.destroyAllWindows()
+
+~~~
+
+
+
 ### 第二十讲 DNN模块
 
 ~~~ Python
@@ -1790,7 +1825,113 @@ src.release()
 cv.destroyAllWindows()
 ~~~
 
+### meanshift and Camshift 在图像中寻找和追踪物体
 
+OpenCV 中的 Meanshift :要在 OpenCV 中使用 Meanshift 算法，首先我们需要设置目标，找到它的直方图，这样我们就可以在每一帧上对目标进行反向投影来计算平均位移。另外我们还需要提供窗口的起始位置。对于直方图，我们仅考虑Hue（色调）值，此外，为了避免因光线不足而产生错误值，使用`cv.inRange ( )`函数将这些值忽略掉.
+
+当物体运动时，运动明显地反映在直方图的反向投影图像中。因此，meanshift算法将窗口移动到具有最大密度的新位置。
+
+~~~python
+import numpy as np
+import cv2 as cv
+# 主要用于移动对象的追踪
+cap = cv.VideoCapture(0)
+# get first frame .
+ret,frame = cap.read()
+
+# setup initial location of window 追踪的窗口
+r,h,c,w = 250,90,400,125  # simply hardcoded the values
+track_window = (c,r,w,h)
+
+# set up the ROI for tracking
+roi = frame[r:r+h, c:c+w]
+hsv_roi = cv.cvtColor(roi, cv.COLOR_BGR2HSV)
+mask = cv.inRange(hsv_roi, np.array((0., 60.,32.)), np.array((180.,255.,255.)))
+roi_hist = cv.calcHist([hsv_roi],[0],mask,[180],[0,180])
+cv.normalize(roi_hist,roi_hist,0,255,cv.NORM_MINMAX)
+
+# Setup the termination criteria, either 10 iteration or move by at least 1 pt
+term_crit = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1 )
+
+while(1):
+    ret, frame = cap.read()
+    if ret == True:
+        hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+        dst = cv.calcBackProject([hsv],[0],roi_hist,[0,180],1)
+
+        # apply meanshift to get the new location
+        ret, track_window = cv.meanShift(dst, track_window, term_crit)
+
+        # Draw it on image
+        x,y,w,h = track_window
+        img2 = cv.rectangle(frame, (x,y), (x+w,y+h), (0,255,0),2)
+        cv.imshow('img2',img2)
+
+        k = cv.waitKey(60) & 0xff
+        if k == 27:
+            break
+
+    else:
+        break
+
+cv.destroyAllWindows()
+cap.release()
+~~~
+
+Camshift
+
+这里面有一个问题，我们的窗口的大小是固定的，而汽车由远及近（在视觉上）是一个逐渐变大的过程，固定窗口是不合适的。所以我们需要根据目标的大小和角度来对窗口进行调整。1988年，OpenCVLabs 提出了一个解决方案：CAMshift （Continuously Adaptive Meanshift）算法，由Gary Bradsky发表在他的论文“Computer Vision Face Tracking for Use in a Perceptual User Interface”中。
+
+Camshift算法首先应用meanshift。一旦meanshift收敛，它就会更新窗口的大小，$$ s = 2 \times \sqrt{\frac{M_{00}}{256}} $$。它还计算最佳拟合椭圆的方向。同样，它将新的缩放搜索窗口和先前的窗口位置应用于meanshift。继续该过程直到满足所需的准确度。
+
+~~~ python
+import numpy as np
+import cv2 as cv
+
+cap = cv.VideoCapture('slow.flv')
+
+# take first frame of the video
+ret,frame = cap.read()
+
+# setup initial location of window
+r,h,c,w = 250,90,400,125  # simply hardcoded the values
+track_window = (c,r,w,h)
+
+# set up the ROI for tracking
+roi = frame[r:r+h, c:c+w]
+hsv_roi =  cv.cvtColor(roi, cv.COLOR_BGR2HSV)
+mask = cv.inRange(hsv_roi, np.array((0., 60.,32.)), np.array((180.,255.,255.)))
+roi_hist = cv.calcHist([hsv_roi],[0],mask,[180],[0,180])
+cv.normalize(roi_hist,roi_hist,0,255,cv.NORM_MINMAX)
+
+# Setup the termination criteria, either 10 iteration or move by atleast 1 pt
+term_crit = ( cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1 )
+
+while(1):
+    ret ,frame = cap.read()
+    if ret == True:
+        hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+        dst = cv.calcBackProject([hsv],[0],roi_hist,[0,180],1)
+
+        # apply meanshift to get the new location
+        ret, track_window = cv.CamShift(dst, track_window, term_crit)
+
+        # Draw it on image
+        pts = cv.boxPoints(ret)
+        pts = np.int0(pts)
+        img2 = cv.polylines(frame,[pts],True, 255,2)
+        cv.imshow('img2',img2)
+        k = cv.waitKey(60) & 0xff
+        if k == 27:
+            break
+        else:
+            cv.imwrite(chr(k)+".jpg",img2)
+    else:
+        break
+
+cv.destroyAllWindows()
+cap.release()
+~~~
 
 
 
