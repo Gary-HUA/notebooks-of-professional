@@ -81,6 +81,14 @@ In action recognition, the semantic understanding enables users to apply prior k
     15."random forests(RFs)"RF is a classifier combination that uses Decision Tree (DT)-based classifiers where every DT is made by randomly selecting the data from the available data.
     16."HMM":An HMM can be explained as a stochastic finite-state machine that can be used to model time sequential information. Basically, there are four major parts in a typical HMM: namely states, initial state distribution, state transition matrix, and state observation matrix. A state represents a property or condition that an HMM may have during a particular time. Initial state distribution indicates initially state probability ofan HMM. The state transition matrix characterizes the probabilities among the states and the observation matrix contains the observation probabilities from each state. Once the architecture ofan HMM is defined with the four components, the next step is to train the HMM. To train, the first step is to classify features into a specific number of clusters, generating a codebook consisting of the cluster centroids. Then from the codebook, symbol sequences are generated through vector quantization. These symbol sequences later are used to model sequential patterns in an HMM.
     17:"forward spotting":the human activity or non-activity is segmented in the input sequence using forward spotting. A sliding window technique is used which computes the observation probability of activity or non-activity using a number of continuing observations within the sliding window,
+    18."unimodel and multimodel method for human activities":Unimodal methods represent human activities from data of a
+single modality, such as images, and they are further categorized as: (i) space-time, (ii) stochastic, (iii) rule-based, and (iv) shape- based methods."Space-time methods" involve activity recognition methods,which represent human activities as a set of spatiotemporal features  or trajectories  Stochastic methods recognize activities by applying statistical models to represent human actions (e.g., hidden Markov models) . Rule-based methods use a set of rules to describe human activities . Shape-based methods efficiently represent activities with high-level reasoning bymodeling themotion ofhuman bodyparts.
+    "Multimodal methods" combine features collected from different sources and are classified into three categories: (i) affective, (ii) behavioral, and (iii) social networking methods.
+       "Affective methods" represent human activities according to emotional communications and the affective state of a person.
+       "Behavioral methods" aim to recognize behavioral attributes, non-verbal multimodal cues, such as gestures, facial expressions, and auditory cues.
+       "social networking methods" model the characteristics and the behavior of humans in several layers ofhuman-to-human interactions in social events fromgestures, bodymotion, and speech.
+    
+    
 ~~~
 
 #### idea
@@ -92,8 +100,48 @@ In action recognition, the semantic understanding enables users to apply prior k
 
 ~~~python
 1.primary thesis:
-2.Critical components of the argument that support the thesis:  
+  
+2.Critical components of the argument that support the thesis: 
+  2-1：
+  2-2：
+  2-3：
+  2-4：
+  2-5：
 3.method & dataset
+4.idea&key
+~~~
+
+### topic(2015) 
+
+#### topic:(2015)A Review of Human Activity Recognition Methods
+
+Michalis Vrigkas1 , Christophoros Nikou1* and Ioannis A. Kakadiaris2
+
+~~~ python
+1.primary thesis:
+      In this work, we provide a detailed review of recent and state-of-the-art research advances in the field of human activity classification. We propose a categorization of human activity methodologies and discuss their advantages and limitations.
+2.Critical components of the argument that support the thesis:  
+    2-1:what is action? where in the video?
+    2-2:human activity recognition methods into two main categories:"unimodal" and "multimodal" activity recognition methods. 
+    unimodal methods: (i) space-time, (ii) stochastic (iii) rule-based, and (iv) shape-based methods.
+    multimodel methods:(i)affective mothods (ii)behavioral methods (iii)social networking methods and (multimodal feature fusion) 
+    2-3:and dataset table.
+3.method & dataset  
+4.idea&key
+~~~
+
+#### topic (2015)Semantic human activity recognition: A literature review
+Maryam Ziaeefard n, Robert Bergevin
+
+~~~ python
+1.primary thesis:
+  This paper presents an overview of state-of-the-art methods in activity recognition using semantic features. Unlike low-level features, semantic features describe inherent characteristics of activities
+2.Critical components of the argument that support the thesis: 
+  2-1:what is semantics?
+  2-2:semantic space.we introduceasemantic space as a feature space including only features using human understanding to distinguish activities
+  2-3:
+3.method & dataset
+UT-Interaction [90], Willow datasets [91],and Pascal VOC2010Action
 4.idea&key
 ~~~
 
@@ -110,6 +158,74 @@ Author: Ahmad Jalal1, Shaharyar Kamal2 and Daijin Kim1
     2-3:"embedded HMM"is introduced which focused specifically at active areas of human body parts such as arms, legs, feet and shoulders.
     2-4:These hybrid features are symbolized by the codebook that is generated from Linde-Buzo-Gray (LBG) clustering algorithm.
 ~~~
+
+#### topic(2015):Skeleton-based Human Activity Recognition for Video Surveillance
+
+Ahmed Taha 1, Hala H. Zayed 1, M. E. Khalifa 2 and El-Sayed M. El-Horbaty 3
+
+~~~python
+1.primary thesis:
+  In this paper, a system for human activity recognition is proposed. We have considered the task of obtaining a descriptive labeling of the activities being performed through labeling human "sub-activities". The activities we consider happen over a long period, and comprise several sub-activities performed in a sequence. The proposed activity descriptor makes the activity recognition problem viewed as a sequence classification problem. The proposed system employs Hidden Markov Models (HMMs) to recognize human activities.
+2.Critical components of the argument that support the thesis: 
+  2-1:RGB-D sensor,Hidden Markov Models(HMMs),
+3.method & dataset
+Cornell CAD-60 and Cornell CAD-120
+4.idea&key
+~~~
+
+#### topic (2015)Hybrid classifier based human activity recognition using the silhouette and cells
+
+D.K. Vishwakarma ⇑, Rajiv Kapoor
+
+~~~python
+1.primary thesis:
+  	The aim of this paper is to present a new approach for human activity recognition in a video sequence by exploiting the key poses of the human silhouettes, and constructing a new classification model.
+2.Critical components of the argument that support the thesis: 
+  2-1:extraction of silhouette using texture information.Gaussian Mixture Model (GMM) and Local Binary Pattern (LBP) based background models are widely used
+  2-2:feature extraction  the feature detectors, feature descriptors, bag-of-features repre-sentations, and local features based on voting for localization.
+  2-3：extracting key poses of the frames.
+  2-4:feature computation and representation
+  2-5:classification model. Linear Discriminant Analysis (LDA), K-Nearest Neighbor (K-NN) and Support Vector Machine (SVM) classifier.
+3.method & dataset
+	Weizmann, KTH, and BalletMovement.
+4.idea&key
+~~~
+
+#### topic(2015)Synoptic Video Based Human Crowd Behavior Analysis for Forensic Video Surveillance
+
+B.Yogameena, K.Sindhu Priya
+
+~~~python
+1.primary thesis:
+  In this paper, Video synopsis is used to represent a short video while preserving the essential activities for a long video.
+2.Critical components of the argument that support the thesis: 
+  2-1：foreground extraction  (background model GMM)
+  2-2：compact video synopsis -global spatiotemporal optimization.-iteractive object shifting. -modeling compact background synthesis
+  2-3：classification of crowd behavior
+3.method & dataset
+4.idea&key
+~~~
+
+#### topic(2015)Human Daily Activity Recognition with Joints plus Body Features Representation Using Kinect Sensor
+Ahmad Jalal, Yeonho Kim,Shaharyar Kamal, Adnan Farooq,Daijin Kim
+
+~~~python
+1.primary thesis:
+  In this paper, we proposed a new feature representation and extraction method using a sequence of depth silhouettes.
+2.Critical components of the argument that support the thesis: 
+  2-1：depth silhouette preprocessing.ROI
+  2-2：feature extraction .rely on the skeleton representation and body shape silhouettes of the human body.
+    (1)skin body parts detection feature.(we used body skin color detection method  to model the skeleton joints.)
+    (2)Multi-view body shape feature:Due to self-occlusion or missing joints information
+  2-3：Training and Recognition(The Self-organizing Map (SOM) is unsupervised learning neural networks)
+  2-4：
+  2-5：
+3.method & dataset,
+Online depth dataset: IM-DailyDepthActivity,MSRAction3D,
+4.idea&key
+~~~
+
+### topic(2016): 
 
 #### topic:(2016)A Survey on Human Activity Recognition from Videos
 
@@ -226,6 +342,8 @@ We have evaluated the HAR systems using the MSRC-12 dataset.we have compared the
 4.idea&key it is compared the accuracy of HAR based on  HMM,DBN,RNN
 ~~~
 
+### topic(2017)
+
 #### topic:(2017)Hidden Markov Model Based Human Activity Recognition using Shape and Optical Flow Based Features
 
 Maheshkumar H. Kolekar, Deba Prasad Dash
@@ -339,7 +457,7 @@ In this paper, we present the state-of-the-art which demonstrates the overall pr
 4.idea&key
 ~~~
 
-
+### topic(2018)
 
 #### topic:(2018)Depth-based human activity recognition: A comparative perspective study on feature extraction
 
@@ -364,7 +482,7 @@ While combining depth and color features on "RGBD-HuDaAct" Dataset
 # compare different feafures extraction techinques. utilize advantage to processing a easier and more accuracy techique
 ~~~
 
-
+### topic(2019)
 
 #### topic:(2019)A Survey on Vision Based Activity Recognition, its Applications and Challenges
 
@@ -402,6 +520,8 @@ Author: Ashwin Geet D’Sa, Dr. B G Prasad
        (13)camouflage                                                                   
        (14)moving background objects or human                                                                                                                    
 ~~~
+
+### topic(2020)
 
 #### topic :(2020)vision -based human activity recognition: a survey   
 
@@ -467,7 +587,7 @@ Author: Preksha Pareek1 · Ankit Thakkar1
     
 ~~~
 
-#### 
+### topic(2021)
 
 
 
