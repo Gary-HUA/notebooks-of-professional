@@ -639,6 +639,26 @@ cv.waitKey(0)
 cv.destroyAllWindows()
 ~~~
 
+#### gamma 矫正 
+
+~~~python
+通过gamma 矫正对输入图像进行颜色空间的标准化（归一化）目的是调整图像的对比度，降低图像局部的阴影和光照变化影响，同时抑制噪声。
+import numpy as np
+import cv2 as cv
+img = cv.imread("E:/python_OpenCV lib/face.jpg", 0)
+print(img.shape)
+# gamma  矫正 值越大 contrast越大
+img1 = np.power(img/float(np.max(img)), 1/1.5)
+img2 = np.power(img/float(np.max(img)), 1.5)
+cv.imshow("ori", img)
+cv.imshow("gamma=1/1.5", img1)
+cv.imshow("gamma=1.5", img2)
+cv.waitKey(0)
+cv.destroyAllWindows()
+~~~
+
+
+
 #### 开闭运算
 
 ~~~python
@@ -782,6 +802,22 @@ res = np.hstack((img, sobelxx, sobelyy, sobelxy))
 cv.imshow("result", res)
 cv.waitKey(0)
 
+import numpy as np
+import cv2 as cv
+src = cv.imread("E:/python_OpenCV lib/lena.jpg", 0)
+img = np.float32(src)/255.0  # 归一化
+print(img.shape)
+# calculate gradient
+sx = cv.Sobel(img, cv.CV_64F, 1, 0, ksize=3)  # x direction gradient
+sy = cv.Sobel(img, cv.CV_64F, 0, 1, ksize=3)  # y direction gradient
+mag, angel = cv.cartToPolar(sx, sy, angleInDegrees=True)  # calculate magnitude of pixel and direction
+cv.imshow("ori",img)
+cv.imshow("x-gradient", sx)
+cv.imshow("y-gradient", sy)
+cv.imshow("magnitude", mag)
+cv.imshow("angle", angel)
+cv.waitKey(0)
+cv.destroyAllWindows()
 ~~~
 
 #### canny边缘检测
@@ -1932,6 +1968,38 @@ while(1):
 cv.destroyAllWindows()
 cap.release()
 ~~~
+
+### HOG 特征提取
+
+~~~ python
+import numpy as np
+import cv2 as cv
+import matplotlib.pyplot as plt
+from skimage.feature import hog
+from skimage import data, exposure
+np.set_printoptions(threshold=np.inf)  # 长显示数组矩阵
+img = cv.imread("E:/python_OpenCV lib/lena.jpg", 0)
+img = np.float32(img)/255  # 归一化
+fd, hog_image = hog(img,orientations=8, pixels_per_cell=(16,16),cells_per_block=(1, 1), visualize=True,multichannel=False) # HOG vector
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6), sharex=True, sharey=True)
+print(hog_image)
+ax1.axis('off')
+ax1.imshow(img, cmap=plt.cm.gray)
+ax1.set_title('Input image')
+
+# Rescale histogram for better display
+hog_image_rescaled = exposure.rescale_intensity(hog_image, in_range=(0, 10))
+ax2.axis('off')
+ax2.imshow(hog_image_rescaled, cmap=plt.cm.gray)
+ax2.set_title('Histogram of Oriented Gradients')
+plt.show()
+
+# cv.imshow("img", img)
+# cv.waitKey(0)
+# cv.destroyAllWindows()
+~~~
+
+
 
 
 
