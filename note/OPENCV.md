@@ -639,6 +639,26 @@ cv.waitKey(0)
 cv.destroyAllWindows()
 ~~~
 
+#### gamma 矫正 
+
+~~~python
+通过gamma 矫正对输入图像进行颜色空间的标准化（归一化）目的是调整图像的对比度，降低图像局部的阴影和光照变化影响，同时抑制噪声。
+import numpy as np
+import cv2 as cv
+img = cv.imread("E:/python_OpenCV lib/face.jpg", 0)
+print(img.shape)
+# gamma  矫正 值越大 contrast越大
+img1 = np.power(img/float(np.max(img)), 1/1.5)
+img2 = np.power(img/float(np.max(img)), 1.5)
+cv.imshow("ori", img)
+cv.imshow("gamma=1/1.5", img1)
+cv.imshow("gamma=1.5", img2)
+cv.waitKey(0)
+cv.destroyAllWindows()
+~~~
+
+
+
 #### 开闭运算
 
 ~~~python
@@ -762,27 +782,7 @@ plt.show()
 
 #### 图像梯度 Sobel算子
 
-~~~python
-# cv2.Sobel(src, ddepth, dx, dy, ksize) 进行sobel算子计算
-import cv2 as cv
-import numpy as np
-img = cv.imread("E:/python_OpenCV lib/lena.jpg", cv.IMREAD_GRAYSCALE)
-# 计算 x 方向的轮廓
-sobelx = cv.Sobel(img, cv.CV_64F, 1, 0, ksize=3)  # 1,0 表示只算水平,不算黑白
-sobelxx = cv.convertScaleAbs(sobelx)  # 对像素值进行绝对值计算
-# 计算Y方向的轮廓
-sobely = cv.Sobel(img, cv.CV_64F, 0, 1, ksize=3)
-sobelyy = cv.convertScaleAbs(sobely)
 
-# xy方向融合 不建议直接计算,先计算再求和 融合的更好
-sobelxy = cv.addWeighted(sobelxx, 0.5, sobelyy, 0.5, 0)  # 分别计算
-# sobelxy_1 = cv.Sobel(img, cv.CV_64F, 1, 1, ksize=3)  # 直接计算 不建议使用 图像不能达到预期目的
-res = np.hstack((img, sobelxx, sobelyy, sobelxy))
-
-cv.imshow("result", res)
-cv.waitKey(0)
-
-~~~
 
 #### canny边缘检测
 
@@ -1788,7 +1788,17 @@ cap.release()
 cv.destroyAllWindows()
 ~~~
 
-### HAR SYSTEM
+#### 帧差分算法 temporal different method
+
+该算法是背景差集算法 的一个子方法，对时间上连续的2/3帧图像进行差分运算，不同帧对应的像素点相减，判断灰度差的绝对值。
+
+~~~python
+
+~~~
+
+
+
+### HAR SYSTEM  background subtraction method
 
 ~~~python
 import cv2 as cv
@@ -1932,6 +1942,91 @@ while(1):
 cv.destroyAllWindows()
 cap.release()
 ~~~
+
+### HOG 特征提取
+
+~~~ python
+import numpy as np
+import cv2 as cv
+import matplotlib.pyplot as plt
+from skimage.feature import hog
+from skimage import data, exposure
+np.set_printoptions(threshold=np.inf)  # 长显示数组矩阵
+img = cv.imread("E:/python_OpenCV lib/lena.jpg", 0)
+img = np.float32(img)/255  # 归一化
+fd, hog_image = hog(img,orientations=8, pixels_per_cell=(16,16),cells_per_block=(1, 1), visualize=True,multichannel=False) # HOG vector
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6), sharex=True, sharey=True)
+print(hog_image)
+ax1.axis('off')
+ax1.imshow(img, cmap=plt.cm.gray)
+ax1.set_title('Input image')
+
+# Rescale histogram for better display
+hog_image_rescaled = exposure.rescale_intensity(hog_image, in_range=(0, 10))
+ax2.axis('off')
+ax2.imshow(hog_image_rescaled, cmap=plt.cm.gray)
+ax2.set_title('Histogram of Oriented Gradients')
+plt.show()
+
+# cv.imshow("img", img)
+# cv.waitKey(0)
+# cv.destroyAllWindows()
+~~~
+
+### binary_shape based object detecting
+
+1. 灰度图， 二值图像的转换，滤波处理噪声，对象划分，寻找二值轮廓，进行标注
+
+   ~~~ python 
+   import cv2
+   import numpy as np
+   src = cv2.VideoCapture("D:/python lib/datasets/KTH_boxing.avi")
+   fourcc = cv2.VideoWriter_fourcc(*"DIVX")
+   out = cv2.VideoWriter("thresh_out.avi", fourcc, 20.0, (160, 120))
+   
+   
+   def cap_camera(name="video", dir = src):  # 视频获取
+       if dir.isOpened():
+           opened, frame = dir.read()
+       else:
+           opened = False
+   
+   
+       while True:
+           cap, frame = dir.read()
+           # 图像处理  1.基于轮廓的对象检测
+           frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+           ret, thresh = cv2.threshold(frame_gray, 150, 255, cv2.THRESH_BINARY)
+           # noise processing 1. dilate -> erosion
+           kernel = np.ones((3,3), np.uint8)
+           median_blur = cv2.medianBlur(thresh, 3)  # median blur
+           dilate = cv2.dilate(thresh, kernel, iterations=1)
+           erosion = cv2.erode(dilate, kernel, iterations=2)
+           contous, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+           for c in contous:
+               perimeter = cv2.arcLength(c, True)
+               if perimeter > 150 and perimeter < 200:  # set-up parameter to decrease noise
+                   x, y, w, h = cv2.boundingRect(c)
+                   cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+           cv2.imshow("name", frame)
+           cv2.imshow("thresh", erosion)
+           out.write(frame)
+   
+           if cv2.waitKey(50) & 0xff == 27:
+               break
+       dir.release()
+       cv2.destroyAllWindows()
+   if __name__ == "__main__":
+       cap_camera()  # 获取视频, 处理图像
+   ~~~
+
+   ### temporal_different method based detecting 
+
+   ~~~ python
+   
+   ~~~
+
+   
 
 
 
