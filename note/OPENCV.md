@@ -1,45 +1,14 @@
-### 方法
-
-~~~ python
-# 使用 matplotlib
-from matplotlib import pyplot as plt
-import cv2 as cv
-img = cv.imread("E:/python_OpenCV lib/NAME.JPG", cv.IMREAD_GRAYSCALE)
-plt.imshow(img, cmap="gray", interpolation="bicubic")  # 图像,色彩
-plt.xticks([]), plt.yticks([])  # 去掉x,y轴的信息
-plt.show()
-
-import numpy as np
-import cv2 as cv 
-img = np.zeros((512, 512, 3), np.uint8)  # 创建一个黑色背景图像
-# 画图像 参数: 第一个在背景上画,起始坐标,终点坐标,颜色,像素(粗)
-# img = cv.line(img, (0, 0), (511, 511), (100, 200, 100), 5)
-# 画出正方形
-# img = cv.rectangle(img, (384, 0), (510, 128), (0, 255, 0), 3)
-# circle
-# img = cv.circle(img, (50, 50), 50, (0,0,255), 2)
-# 椭圆 0,0,360 旋转角度
-img = cv.ellipse(img, (256, 256),(100, 50),0,0,360,(0,0,255),1)
-cv.imshow("res", img)
-cv.waitKey(0)
-
-~~~
-
-
-
-### 第一讲： 视频和图像的信息获取
+### 第一讲： 图像视频的基本操作
 
 ~~~python
 import cv2 as cv
 # 定义一个方法 用于获取图片的格式等基本信息
-
 
 def image_info(img):
     print(type(img))  # <class 'numpy.ndarray'>
     print(img.shape)  # (256, 256, 3)  大小和通道（opencv 通道为	BGR）
     print(img.size)  # 196608
     print(img.dtype)  # uint8
-
 
 src = cv.imread("E:/python_OpenCV lib/lena.jpg")  # 加载一张图片,第二个参数定义色彩(cv.IMREAD_COLOR) CV.IMREAD_GRAYSCALE
 cv.imwrite("E:/python_OpenCV lib/lena_gray.jpg", src)  # 保存图像信息,第一个参数是位置,第二个参数是源文件
@@ -50,25 +19,37 @@ cv.destroyAllWindows()  # 销毁窗口
 
 ~~~
 
-#### 图像的基本操作
+#### 图像的读入,显示,调整窗口大小，图像写入。
 
 ~~~python
 import numpy as np
 import cv2 as cv
 # load  an color image in grayscale;
-img = cv.imread("E:/python_OpenCV lib/lena.jpg", 0)
-cv.imshow("example", img)
-k = cv.waitKey(0)
+img = cv.imread("E:/python_OpenCV lib/lena.jpg", 0)  # 图像的读入 
+cv.nameWindow("image",cv.WINDOW_NORMAL/AUTOSIZE)
+cv.imshow("image", img)  # 图像的显示
+k = cv.waitKey(0)  # 键盘绑定函数，等待是否有键盘输入
 # 对退出条件进行判断 如果是S 就是保存当前图像
 if k == 27:  # 27 is  exit 
-    cv.destroyAllWindows()
+    cv.destroyAllWindows()  # 删除我们创建任意的窗口
 elif k == ord("s"):  # wait for S to save and exit;
     cv.imwrite("E:/python_OpenCV lib/ord_s.jpg", img)
     cv.destroyAllWindows()
-
-    
-    
 ~~~
+
+#### 使用 Matplotlib 
+
+~~~python
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+img = cv2.imread("E:/python_OpenCV lib/lena.jpg",0)   # 读入图像
+plt.imshow(img, cmap="gray", interpolation="bicubic") # 显示图像，
+plt.xticks([]), plt.yticks([])  
+plt.show()
+~~~
+
+
 
 #### 使用opencv 画几何图像
 
@@ -228,11 +209,11 @@ time = (end - start)/cv.getTickFrequency()
 print(time)
 ~~~
 
-### 第二讲 视频获取操作
+### 第二讲 视频读入，显示，保存，视频帧参数修改操作
 
 ~~~python
 import cv2 as cv
-src = cv.VideoCapture(0)  # 获取摄像头
+src = cv.VideoCapture(0)  # 获取视频
 if src.isOpened():  # 判断是否正常打开
     opened, frame = src.read()  # 读取源  得到两个返回值 bool 和帧数
     frame = cv.flip(frame, 1)  # 颠倒摄像头镜像问题
