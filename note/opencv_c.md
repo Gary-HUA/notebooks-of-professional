@@ -1,6 +1,153 @@
-### reading  an image: loading, modify , output, store.
+
+
+### C language
+
+#### 第一章:程序结构 
+
+主要包括:预处理指令,函数,变量,语句&表示式, 注释
+
+~~~ c
+#include <stdio.h> // 预处理指令 C编译器编译之前要包含该文件
+
+int main() {// 主函数
+    printf("Hello, World!\n"); // 语句 表达式,函数
+    return 0;//函数结束
+}
+~~~
+
+#### 第二章:数据结构
+
+c语言包含了基本类型(整数类型,浮点类型),枚举类型,void类型,派生类型(指针,数组,结构,共用体和函数类型)
 
 ~~~c
+1.整数类型 char,unsigned-char,signed char, int,unsigned int, short, unsigned short, long,unsigned long
+2.浮点型: float ,double,long double.
+#include <stdio.h>
+int main() {// 主函数
+    printf("check datatype:%d\n", sizeof(int));// lu为32位无符号类型整数 查看当前数据(存储)类型占用字节大小
+    printf("check datatype:%lu\n", sizeof(unsigned int ));
+    printf("check datatype:%lu\n", sizeof(signed int));
+    printf("check datatype:%E\n", sizeof(char)); //%E 为以指数形式输出单、双精度实数
+    //444 4.940656E-324
+    return 0;
+}
+~~~
+
+#### 第三章: 变量和常量
+
+变量声明向编译器保证变量以指定的类型和名称存在，这样编译器在不需要知道变量完整细节的情况下也能继续进一步的编译。变量声明只在编译时有它的意义，在程序连接时编译器需要实际的变量声明。
+
+变量的声明由两种情况,一种需要建立存储空间,一种不需要,通过extern 声明变量而不进行定义
+
+~~~c
+#include <stdio.h>
+int x, y,result;
+int add_num(){
+    // extern 是为了声明x,y 是全局变量.
+    extern x;
+    extern y;
+    //给外部全局变量赋值;
+    x=1;
+    y=3;
+    return x+y;
+}
+int main() {// 主函数
+    result=add_num();
+    printf("the add result:%d\n", result);
+    return 0;
+}
+//4
+~~~
+
+常量定义:使用#define 预处理器定义/使用**const** 关键字
+
+~~~c
+#include <stdio.h>
+//#define LENGTH 10 // define constant values.不指定类型,没有分号
+//#define WIDTH 5
+const int LENGTH=10; //type name=value;
+const int WIDTH=5;
+int main() {// 主函数
+    int area = LENGTH * WIDTH;
+    printf("the area is:%d",area);
+    return 0;
+}
+~~~
+
+#### 第四章:C 存储类
+
+存储类定义 C 程序中变量/函数的范围（可见性）和生命周期。这些说明符放置在它们所修饰的类型之前。下面列出 C 程序中可用的存储类：
+
+- **auto** 所有局部变量默认的存储类
+
+- **register** 用于定义(可能)存储在寄存器中而不是RAM中的局部变量,变量的最大尺寸等于寄存器并且不能对他进行&运算 
+
+- **static** 存储类指示编译器在程序的生命周期内保持局部变量的存在，而不需要在每次它进入和离开作用域时进行创建和销毁。因此，使用 static 修饰局部变量可以在函数调用之间保持局部变量的值。
+
+  static 修饰符也可以应用于全局变量。当 static 修饰全局变量时，会使变量的作用域限制在声明它的文件内。
+
+  全局声明的一个 static 变量或方法可以被任何函数或方法调用，只要这些方法出现在跟 static 变量或方法同一个文件中
+
+- **extern** 提供一个全局变量的引用对所有程序文件可见,
+
+~~~c
+#include <stdio.h>
+static  int count =10; // 变量声明为static不会因为每次调用函数而重置变量值.变量是全局的 就是默认static
+void func(void){
+static num = 5; //在函数中定义静态变量.定义为非static 每次调用就是初始的结果6
+num++;
+printf("the count is:%d\t",count);
+printf("the static num :%d\n", num);
+}
+int main() {// 主函数
+while (count--){
+    func();
+}
+return 0;
+}
+/**the count is:9  the static num :6
+the count is:8  the static num :7
+the count is:7  the static num :8
+the count is:6  the static num :9
+the count is:5  the static num :10
+the count is:4  the static num :11
+the count is:3  the static num :12
+the count is:2  the static num :13
+the count is:1  the static num :14
+the count is:0  the static num :15**/
+~~~
+
+#### 第五章:运算符(算术,关系,逻辑,位,赋值,杂项(sizeof,&,*,?:))
+
+~~~c
+sizeof() 返回变量大小, &a;求变量的实际地址,*a;指针指向一个变量,?:;三目(条件表达式). 
+   #include <stdio.h>
+int main() {// 主函数
+    int b=10;
+    double a =3.145;
+    int c = (b==10)?20:30; // 三目表达式
+    printf("address%d\n",&c);// &a 给出变量的实际内存地址.
+    printf("result:%d\n",c);
+    return 0;
+}
+~~~
+
+#### 第六章:C判断
+
+~~~c
+
+~~~
+
+
+
+### opencv_C
+
+~~~~c
+
+
+#### reading  an image: loading, modify , output, store.
+
+​~~~c
 #include<opencv2/opencv.hpp>
 using namespace cv;  // 使用命名空间进行指定, 在代码中可以省略
 int main(int argc, char** argv) {
@@ -34,7 +181,7 @@ int main(int argc, char** argv) {
 }
 ~~~
 
-### mask operation
+#### mask operation
 
 ~~~c++
 //E:/python_OpenCV lib/lena.jpg
