@@ -132,9 +132,169 @@ int main() {// 主函数
 }
 ~~~
 
-#### 第六章:C判断
+#### 第六章:C判断(if,switch,?:),循环(for,while,),
 
 ~~~c
+#include <stdio.h>
+// 判断
+int main() {
+    int num=10;
+    if (num>20){
+        printf("the num is %d\n",num);
+        }
+    else{
+        printf("error:$$$");
+    }
+    }
+#include <stdio.h>
+// 循环
+int main() {
+    int count=10;
+  for(int i=0;i<=count;i++){
+      printf("the num is:%d\n",i);
+  }
+    }
+
+~~~
+
+#### 第七章:函数
+
+~~~c
+#include <stdio.h>
+// 函数
+int sum(int a, int b){
+    return a+b;
+}
+int main() {
+    int num1,num2,result;
+    printf("enter integer num1:");
+    scanf("%d",&num1);//变量的键盘输入
+    printf("enter integer num2:");
+    scanf("%d",&num2);
+    result=sum(num1,num2);//函数的调用和传参
+    printf("the result is:%d\n",result);
+    return 0;
+    }
+~~~
+
+#### 第八章:数组
+
+~~~c
+#include <stdio.h>
+// 数组
+int sum(int a, int b){
+    return a+b;
+}
+int main() {
+    int array[2]={10,30};//二位数组:int array[3][4]={0,0,0,0,}{0,0,0,0,}{0,0,0,0};
+    int arrays[2][2]={{2,3},{1,2}};
+    int result;
+    result=sum(array[0],array[1]);
+    printf("%d\n",result);
+    for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            printf(":%d\n",arrays[i][j]);
+        }
+    }
+    return 0;
+    }
+
+~~~
+
+#### 第九章 enum枚举(enumerate列举)
+
+~~~c
+#include <stdio.h>
+// 枚举
+enum DAY{
+    monday=1,tuesday,wednesday,thursday,friday,saturday,sunday
+}day;
+
+int main() {
+    enum DAY day;
+    day=tuesday;//2
+    printf("%d\n",day);//2
+    //如果枚举是连续的就可以进行循环遍历
+    for(int day=monday;day<=sunday;day++){
+        printf("the day is:%d\n",day);
+    }
+    return 0;
+    }
+/**2
+the day is:1
+the day is:2
+the day is:3
+the day is:4
+the day is:5
+the day is:6
+the day is:7**/
+~~~
+
+#### 第十章:指针变量,指针函数
+
+~~~c
+#include <stdio.h>
+// 指针:就是指向目标变量的地址的一个针,可以通过指针访问目的地址 进而使用值.
+int main() {
+    int num=100;
+    int *p;
+    p=&num;
+    printf("num value:%d\n",num);//100
+    printf("num address value:%p\n",&num);//000000000061FE14  指针里存着num地址
+    printf("point value:%p\n",&p);//000000000061FE10 指针的内存地址号
+    printf("point direction value:%d\n",*p);//100 指针指向地址的数据;
+    return 0;
+    }
+// 指针遍历访问数组
+#include <stdio.h>
+int main() {
+    int num[]={10,100,200,500,1000};
+    int *ptr=num;// 指针指向数组
+    for(int i=0;i<5;i++){
+        printf("pointer address:var[%d]=%p\n",i,&ptr);// 指针指向数组的地址
+        printf("pointer value:var[%d]=%d\n",i,*ptr);// 指向数组的值
+        *ptr++;// 指向下一个位置
+    }
+    return 0;
+    }
+    /**
+pointer address:var[0]=000000000061FDF8
+pointer value:var[0]=10
+pointer address:var[1]=000000000061FDF8
+pointer value:var[1]=100
+pointer address:var[2]=000000000061FDF8
+pointer value:var[2]=200
+pointer address:var[3]=000000000061FDF8
+pointer value:var[3]=500
+pointer address:var[4]=000000000061FDF8
+pointer value:var[4]=1000
+     **/
+~~~
+
+
+~~~c
+//pointer function
+#include <stdio.h>
+// 指针函数 	
+int max(int a,int b) {
+
+    return a>b? a:b;
+}
+int main() {
+    int a,b,c,d;
+    printf("enter three numbers:");
+    scanf("%d%d%d",&a,&b,&c);//scanf 赋值的时候需要&。
+    int (*ptr)(int,int)=max;// 整形指针指向max有两个整型参数的函数
+    d=ptr(ptr(a,b),c);//指针函数嵌套 参数分别是(a,b)c
+    printf("the max is:%d\n",d);
+    return 0;
+    }
+~~~
+
+~~~c
+/**
+回调函数，指针作为函数的参数
+**/
 
 ~~~
 
@@ -142,12 +302,9 @@ int main() {// 主函数
 
 ### opencv_C
 
-~~~~c
-
-
 #### reading  an image: loading, modify , output, store.
 
-​~~~c
+~~~~c
 #include<opencv2/opencv.hpp>
 using namespace cv;  // 使用命名空间进行指定, 在代码中可以省略
 int main(int argc, char** argv) {
