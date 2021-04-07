@@ -230,7 +230,7 @@ the day is:6
 the day is:7**/
 ~~~
 
-#### 第十章:指针变量,指针函数
+#### 第十章:指针变量,指针函数,回调函数
 
 ~~~c
 #include <stdio.h>
@@ -295,10 +295,121 @@ int main() {
 /**
 回调函数，指针作为函数的参数
 **/
+#include<stdio.h>
+#include <cstdlib>
+//回调函数
+void get_array(int *array, size_t array_size,int (*random_)()){
+    for (int i=0;i<array_size;i++){
+        array[i]=random_();//random_()函数得到的值传到数组中
+    }
+}
+// random values.
+int random_(){
+    return rand();
+}
+int main() {
+    int array[10];//define an array to accept values.
+    get_array(array,10,random_);//第一个参数是指针变量，第二个参数是数组大小，第三个参数是回调函数。
+    //遍历输出
+    for(int i=0;i<10;i++){
+        printf("print array values:i=[%d]%d\n",i,array[i]);
+    }
+    return 0;
+}
 
 ~~~
 
+#### 第十一章：字符串
 
+字符串函数：
+
+~~~c
+#include <cstdio>
+#include<cstring>
+int main(){
+    char array_ch[10]={'a','r','r','a','y'};//创建一个字符串数组 这里的10对于连接字符串很重要
+    char ch_array[]="print";//不同初始化的字符数组
+    //strcpy(array_ch,ch_array);// s2 to s1 数组  输出结果 print.
+    //strcat(array_ch,ch_array);//连接两个字符串为一个数组，s1+s2 arrayprint 给输出数组指定空间
+    int len =strlen(array_ch);//字符串长度
+    int boo=strcmp(array_ch,ch_array);//匹配两个字符串 相同返回0，s1<s2 小于0 否则大于0
+    strchr(array_ch,'a');//返回一个指针 指向第一个出现s2的位置
+    strstr(array_ch,ch_array);//返回一个指针，指向S1中第一次出现S2的位置
+    printf("%d\n",boo);
+    printf("print array_char:");
+    for(char i:array_ch){//循环遍历数组 这里使用了rang 值循环
+        printf("%c",i);
+    }
+}
+~~~
+
+#### 第十二章：结构体
+
+**结构**是 C 编程中另一种用户自定义的可用的数据类型，它允许您存储不同类型的数据项。
+
+~~~c
+#include "cstdio"
+#include "cstring"
+struct books{ // 结构名
+    char title[50];
+    char author[20];
+    char subject[50];
+    int book_id;
+}book={"c language","gary","c learning",123456};//结构体内容的初始化 这里没有内容可以在函数中进行声明成员
+// 结构没有初始化，后续进行声明 struct books book1; 然后可以使用成员 book1
+int main(){
+    strcpy(book.title,"java");// 通过结构的成员变量进行访问 覆盖了title的数组内容
+    printf("title:%s\nauthor:%s\nsubject:%s\nbook_id:%d",book.title,book.author,book.subject,book.book_id);
+    return 0;
+}
+//结构作为函数的参数demo
+#include "cstdio"
+#include "cstring"
+struct BOOKS{ // 结构名
+    char title[50];
+    char author[20];
+    char subject[50];
+    int book_id;
+};
+//结构作为了函数的参数 函数也可以先声明
+void struct_print(BOOKS book){
+    printf("title:%s\nauthor:%s\nsubject:%s\nid:%d",book.title,book.author,book.subject,book.book_id);
+}
+int main(){
+    //对结构进行初始化
+    struct BOOKS book1;// 声明成员book1 类型是BOOKS
+    strcpy(book1.title,"c language");
+    strcpy(book1.author,"gary");
+    strcpy(book1.subject,"c programming");
+    book1.book_id=123456;
+    struct_print(book1);
+    return 0;
+}
+//定义指向结构的指针，可以 通过指针进行访问结构
+#include "cstdio"
+#include "cstring"
+struct BOOKS{ // 结构名
+    char title[50];
+    char author[20];
+    char subject[50];
+    int book_id;
+};
+void struct_print(BOOKS *book){// 定义了指向成员的指针 在使用属性内容时不再是单独的DOC要改变-> 指向成员的属性
+    printf("title:%s\nauthor:%s\nsubject:%s\nid:%d",book->title,book->author,book->subject,book->book_id);
+}
+int main(){
+    //对结构进行初始化
+    struct BOOKS book1;// 声明成员book1 类型是BOOKS
+    strcpy(book1.title,"c language");
+    strcpy(book1.author,"gary");
+    strcpy(book1.subject,"c programming");
+    book1.book_id=123456;
+    struct_print(&book1);// 这里要使用&符号 表明地址身份
+    return 0;
+}
+~~~
+
+#### 位域/位段
 
 ### opencv_C
 
