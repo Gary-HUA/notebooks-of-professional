@@ -411,8 +411,27 @@ int main(){
 
 #### 十三章:位域/位段
 
-~~~c
+带有预定义宽度的变量被称为**位域**。位域可以存储多于 1 位的数，例如，需要一个变量来存储从 0 到 7 的值，您可以定义一个宽度为 3 位的位域
 
+~~~c
+#include"cstdio"
+#include"cstring"
+/**
+ *
+ * @gary
+ * 位域的演示
+ */
+struct Bit{// 定义位域结构 告诉编译器只使用指定的位。如果超出了就到达下一个位空间
+    //unsigned int bit_width:1;// 指定创建的位空间大小,如果没有指定两个整形占一个字节，就占8位，这里两个整形指定一位 所以大小是4.
+    //unsigned int bit_height:1;
+    unsigned int age:2;//实例 指定年龄的位域 0-3 00-11
+}bit;
+int main(){
+    bit.age=4;//指定数字就是占位数 必须在指定位之内的值。
+    printf("the width of bit:%d\n",sizeof(bit));//结果是4,因为指定了位空间1 占一个字节 四位。1111
+    printf("the age is:%d\n",bit.age);
+    return 0;
+}
 ~~~
 
 #### 第十四章:共用体
@@ -436,6 +455,70 @@ int main(){
     printf("%s\n",data.name);// 这里显示的应该是100 但是因为类型不同 显示不是Gary 也不是100 可能是100在ASCII的字符
     return 0;
 }
+
+~~~
+
+#### 第十五章：typedef 
+
+ typedef 和#define的区别：
+
+**#define** 是 C 指令，用于为各种数据类型定义别名，与 **typedef** 类似，但是它们有以下几点不同：
+
+- **typedef** 仅限于为类型定义符号名称，**#define** 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。
+- **typedef** 是由编译器执行解释的，**#define** 语句是由预编译器进行处理的。
+
+~~~c
+#include "cstdio"
+#include"cstring"
+/**
+ *
+ * @gary
+ * typedef 的使用和#define的区分
+ */
+typedef struct Books{// typedef 为结构取新的名字
+    char title[50];
+    char name[20];
+    char author[20];
+    int book_id;
+}book;
+int main(){
+    typedef int zx;//给整形取了一个新的名字 zx 在后边可以替代使用 特别是自己定义的数据结构很方便
+    zx value=10;
+    printf("%d\n",value);//10
+    // 结构的TYPEDEF
+    book book1;// 因为结构进行了重命名声明，我们进行了重命名 book1 使用 book 已经不好使了。
+    strcpy(book1.title,"c language");
+    printf("print title:%s\n",book1.title);
+    return 0;
+}
+~~~
+
+#### 第十六章：input,output
+
+printf() 来自于dtdio.h库的输出函数。 getchar(),putchar()  gets(),puts(),
+
+~~~c
+#include "cstdio"
+#include "cstring"
+int main(){
+//    printf("enter character:");
+//    int c=getchar();//输入字符 返回值是一个整数值
+//    printf("print character:");
+//    putchar(c);//一次输出一个字符 Only
+    // gets() puts() 函数 读取一行字符串到指向的缓冲区 直到一个中指符/EOF
+    char str[100];
+    printf("enter:");
+    gets(str);
+    printf("\nprint:");
+    puts(str);
+// scanf() and printf()
+    return 0;
+}
+~~~
+
+#### 第十七章：文件读写
+
+~~~c
 
 ~~~
 
