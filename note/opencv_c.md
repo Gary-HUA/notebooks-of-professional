@@ -17,7 +17,7 @@ int main() {// 主函数
 
 #### 第二章:数据结构
 
-c语言包含了基本类型(整数类型,浮点类型),枚举类型,void类型,派生类型(指针,数组,结构,共用体和函数类型)
+c语言包含了基本类型(整数类型,浮点类型),枚举类型,void类型,派生类型(指针,数组,结构,共用体和函数类型) +类型转换
 
 ~~~c
 1.整数类型 char,unsigned-char,signed char, int,unsigned int, short, unsigned short, long,unsigned long
@@ -517,6 +517,149 @@ int main(){
 ~~~
 
 #### 第十七章：文件读写
+
+r: 打开一个已有的文本文件，允许读取文件
+
+w: 打开一个文本文件，允许写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会从文件的开头写入内容。如果文件存在，则该会被截断为零长度，重新写入。
+
+a:打开一个文本文件，以追加模式写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会在已有的文件内容中追加内容
+
+r+:打开一个文本文件， 允许读写文件
+
+w+:打开一个文本文件，允许读写文件。如果文件已存在，则文件会被截断为零长度，如果文件不存在，则会创建一个新文件。
+
+a+:打开一个文本文件，允许读写文件。如果文件不存在，则会创建一个新文件。读取会从文件的开头开始，写入则只能是追加模式。
+
+如果处理的是二进制文件，"rb", "wb", "ab", "rb+", "r+b", "wb+", "w+b", "ab+", "a+b"
+
+~~~c
+/**
+ * 文件读写
+ * @gary
+**/
+#include "cstdio"
+#include "cstring"
+
+int main(){
+//    FILE *fp=NULL;// 空指针 类型FILE包含了所有用来控制流的必要信息
+//    fp = fopen("E:/CL/open.txt","w+");
+//    fprintf(fp,"this is file print message,");//文档输入
+//    fputs("this is puts message.",fp);//输入
+//    fclose(fp);// close file .
+    // read file
+    FILE *fp=NULL;
+    char buff[500];
+    fp = fopen("E:/CL/open.txt","r");
+    //fscanf(fp,"%s\n",buff);//fscanf()遇到第一个空格和换行符停止
+    //printf("the result is:%s\n",buff);
+    printf("-------------\n");
+    fgets(buff,200,(FILE*)fp);// 读取n-1个字符 最后n是追加的终止符
+    printf("the file is:%s\n",buff);
+    fclose(fp);
+    // binary I/O function:
+    
+    return 0;
+
+}
+~~~
+
+#### 第十八章：C预处理器
+
+~~~c
+/**C 
+预处理器不是编译器的组成部分，但是它是编译过程中一个单独的步骤。简言之，C 预处理器只不过是一个文本替换工具而已，它们会指示编译器在实际编译之前完成所需的预处理。我们将把 C 预处理器（C Preprocessor）简写为 CPP。
+所有的预处理器命令都是以井号（#）开头。它必须是第一个非空字符，为了增强可读性，预处理器指令应从第一列开始。下面列出了所有重要的预处理器指令：
+#define	定义宏
+#include 包含一个源代码文件
+#undef	取消已定义的宏
+#ifdef	如果宏已经定义，则返回真
+#ifndef	如果宏没有定义，则返回真
+#if	如果给定条件为真，则编译下面代码
+#else	#if 的替代方案
+#elif	如果前面的 #if 给定条件不为真，当前条件为真，则编译下面代码
+#endif	结束一个 #if……#else 条件编译块
+#error	当遇到标准错误时，输出错误消息
+#pragma	使用标准化方法，向编译器发布特殊的命令到编译器中
+**/
+~~~
+
+#### 第十九章：C头文件：
+
+~~~c
+/**
+头文件是扩展名为 .h 的文件，包含了 C 函数声明和宏定义，被多个源文件中引用共享。有两种类型的头文件：程序员编写的头文件和编译器自带的头文件。
+
+在程序中要使用头文件，需要使用 C 预处理指令 #include 来引用它。前面我们已经看过 stdio.h 头文件，它是编译器自带的头文件。
+
+引用头文件相当于复制头文件的内容，但是我们不会直接在源文件中复制头文件的内容，因为这么做很容易出错，特别在程序是由多个源文件组成的时候。
+
+A simple practice in C 或 C++ 程序中，建议把所有的常量、宏、系统全局变量和函数原型写在头文件中，在需要的时候随时引用这些头文件。
+**/
+~~~
+
+#### 第二十章：错误处理：
+
+~~~c
+/**
+C 语言不提供对错误处理的直接支持，但是作为一种系统编程语言，它以返回值的形式允许您访问底层数据。在发生错误时，大多数的 C 或 UNIX 函数调用返回 1 或 NULL，同时会设置一个错误代码 errno，该错误代码是全局变量，表示在函数调用期间发生了错误。您可以在 errno.h 头文件中找到各种各样的错误代码。
+
+所以，C 程序员可以通过检查返回值，然后根据返回值决定采取哪种适当的动作。开发人员应该在程序初始化时，把 errno 设置为 0，这是一种良好的编程习惯。0 值表示程序中没有错误。
+**/
+#include "cstdio"
+#include "cstring"
+#include "cerrno"
+/**
+ * C 语言提供了 perror() 和 strerror() 函数来显示与 errno 相关的文本消息。
+**/
+extern int errno;
+int main(){
+    FILE *fp;
+    int errnum;
+    fp=fopen("un_exist.txt","rb");
+    if (fp == NULL){
+        // 两种错误显示方式：
+        errnum = errno;
+        fprintf(stderr,"wrong num:%d\n",errno);//stderr 文件流输出错误
+
+        perror("perror print error");//这两句结果一致
+        fprintf(stderr,"file opened wrong:%s\n",strerror(errnum));//
+    }else{
+        fclose(fp);
+    }
+    return 0;
+}
+~~~
+
+#### 第二十一章：recursion 递归
+
+~~~c
+#include "cstdio"
+#include "cstring"
+#include "cerrno"
+/**
+ * C 语言的递归调用  演示裴波那契数列
+**/
+int recursion(int i){
+    if(i==0){
+        return 0;
+    }
+    if(i==1){
+        return 1;
+    }
+    return recursion(i-1)+recursion(i-2);
+
+}
+int main(){
+    int i;
+    for(i=0;i<10;i++){
+        printf("the sequence are:%d\n",recursion(i));
+    }
+    return 0;
+}
+//0 1 1 2 3 5 8 13 21 34
+~~~
+
+#### 第二十二章：C可变参数：
 
 ~~~c
 
