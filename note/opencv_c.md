@@ -661,6 +661,147 @@ int main(){
 
 #### 第二十二章：C可变参数：
 
+您可能会碰到这样的情况，您希望函数带有可变数量的参数，而不是预定义数量的参数
+
+函数 **func()** 最后一个参数写成省略号，即三个点号（**...**），省略号之前的那个参数是 **int**，代表了要传递的可变参数的总数。为了使用这个功能，您需要使用 **stdarg.h** 头文件，该文件提供了实现可变参数功能的函数和宏
+
+~~~c
+#include "cstdio"
+#include "cstdarg"
+double average(int num,...){// int num is:how many parameters is here.
+    va_list valist;//define variable list
+    double sum=0.0;
+    int i;
+    va_start(valist,num);//infinite valist number is num.
+    //traverse valist values.
+    for(i=0;i<num;i++){
+        sum+=va_arg(valist,int);
+    }
+    va_end(valist);// clear valist memory
+    return sum/num;//sum divide num.
+}
+int main(){
+    printf("Average of 2, 3, 4, 5 = %f\n", average(4, 8,5,8,8));
+}
+~~~
+
+#### 第二十三章：内存管理
+
+**void \*calloc(int num, int size);**
+在内存中动态地分配 num 个长度为 size 的连续空间，并将每一个字节都初始化为 0。所以它的结果是分配了 num*size 个字节长度的内存空间，并且每个字节的值都是0。
+
+**void free(void \*address);**
+该函数释放 address 所指向的内存块,释放的是动态分配的内存空间。
+
+** void \*malloc(int num);** 在堆区分配一块指定大小的内存空间，用来存放数据。这块内存空间在函数执行完成后不会被初始化，它们的值是未知的。
+
+** void \*realloc(void \*address, int newsize);** 该函数重新分配内存，把内存扩展到 **newsize**。
+
+当程序退出时，操作系统会自动释放所有分配给程序的内存，但是，建议您在不需要内存时，都应该调用函数 **free()** 来释放内存。
+
+或者，您可以通过调用函数 **realloc()** 来增加或减少已分配的内存块的大小。让我们使用 realloc() 和 free() 函数
+
+~~~c
+# include "cstdio"
+#include "cstdlib"
+#include "cstring"
+int  print(char array){
+    for(int i=0;i<array;i++){
+        printf("the arrya name:%s",i);
+    }
+}
+int main(){
+    char name[100];// define name array.
+    char *description;// pointer
+    strcpy(name,"gary");
+    //dynamic allocate memory
+    description = (char*)malloc(50*sizeof (char));
+    // 储存更大的描述信息
+    //description =(char*)realloc(description,100* sizeof(char));
+    if (description==NULL){
+        fprintf(stderr,"error,unable to allocate required memory.\n");
+
+    }else{
+        strcpy(description,"gary is a male");
+
+    }
+    printf("name=:%s\n",name);
+    printf("description:%s\n",description);
+    printf("siezeof:%d\n", sizeof(description));
+    free(description);
+    printf("free memory:\n",sizeof(description));
+    return 0;
+}
+/**
+name=:gary
+description:gary is a male
+siezeof:8
+free memory:
+**/
+~~~
+
+#### 第二十四章：命令行参数
+
+执行程序时，可以从命令行传值给 C 程序。这些值被称为**命令行参数**，它们对程序很重要，特别是当您想从外部控制程序，而不是在代码内对这些值进行硬编码时，就显得尤为重要了
+
+~~~c
+#include"cstdio"
+/**
+ *
+ * 里面存放的指针指向所有的命令行参数，argv[0]指向程序的全局路径，
+ * argv[1]指向在DOS命令行中执行程序名后的第一个字符串，argv[2]指向第二个
+ */
+//int main(int argc,char **argv)
+int main(int argc,char *argv[]){//args 传入参数个数，argv[]是一个指针数组，指向传递给程序的参数
+    //printf("programming name:%s\n",argv[0]);
+    if(argc==2)
+    {
+        printf("the argument supplied is:%s\n",argv[1]);
+    }else
+        if(argc>2){
+        printf("too many arguments supplied.\n");
+    }else{
+        printf("one argument expected.\n");
+    }
+    return 0;
+}
+~~~
+
+#### 排序算法
+
+1.bubble sort:-
+
+~~~c
+# include "cstdio"
+/*
+ * bubble sort
+ */
+void bubble_sort(int arr[],int len){
+  int i,j,temp;
+  for (i=0;i<len-1;i++){
+    for(j=0;j<len-1-i;j++){
+      if(arr[j]>arr[j+1]){
+        temp=arr[j];
+        arr[j]=arr[j+1];
+        arr[j+1]=temp;
+      }
+    }
+  }
+}
+int main(){
+  int arr[]={522,4,665,25,38,99,1,788,52,61};
+  int len=(int)sizeof(arr)/sizeof(*arr);
+  bubble_sort(arr,len);
+  int i;
+  for( i=0;i<len;i++){
+    printf("%d\t",arr[i]);
+  }
+  return 0;
+}
+~~~
+
+2.选择排序：
+
 ~~~c
 
 ~~~
