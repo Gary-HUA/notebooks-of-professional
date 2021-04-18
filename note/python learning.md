@@ -3595,4 +3595,3 @@ def binary_search(lis, item):
 result = binary_search(lis,item)
 print(result)
 ~~~
-

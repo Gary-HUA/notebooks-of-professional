@@ -2001,12 +2001,88 @@ plt.show()
        cap_camera()  # 获取视频, 处理图像
    ~~~
 
-   ### temporal_different method based detecting 
+   ### HAR_SVM （silhouette，shape, hog, svm）
 
-   ~~~ python
+   ~~~python
+   import cv2
+   import numpy as np
+   from skimage.feature import hog
+   from skimage import data, exposure
    
+   src = cv2.VideoCapture("D:/python lib/datasets/KTH_running.avi")
+   fourcc = cv2.VideoWriter_fourcc(*"DIVX")
+   out = cv2.VideoWriter("thresh_out.avi", fourcc, 20.0, (160, 120))
+   
+   
+   # silhouette detecting and circumscribe
+   def sil_de(frames, frame):
+       contous, hierarchy = cv2.findContours(frames, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+       for c in contous:
+           perimeter = cv2.arcLength(c, True)
+           if 150 < perimeter < 200:  # set-up parameter to decrease noise
+               x, y, w, h = cv2.boundingRect(c)
+               bound = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+               # print(bound)
+               return bound
+   
+   
+   def hog_pro(frame_local):
+       if frame_local is None:
+           print("not get detecting area...")
+       else:
+           frame_local = cv2.cvtColor(frame_local, cv2.COLOR_BGR2GRAY)
+           np.set_printoptions(threshold=np.inf)
+           # frame = np.float(bound_array)/255.0  # contrast-normalized
+           fd, hog_feature = hog(frame_local, orientations=8, pixels_per_cell=(16, 16),
+                             cells_per_block=(1, 1), visualize=True, multichannel=False)
+           print(hog_feature)
+           return hog_feature
+   
+   
+   # capture video, pre-processing, silhouette detecting ,bounding,
+   def cap_camera(name="video", dir = src):
+       if dir.isOpened():
+           opened, frame = dir.read()
+       else:
+           opened = False
+       while True:
+           cap, frame = dir.read()
+           frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+           ret, thresh = cv2.threshold(frame_gray, 150, 255, cv2.THRESH_BINARY)
+           # noise processing 1. median_blur dilate -> erosion
+           kernel = np.ones((3, 3), np.uint8)
+           median_blur = cv2.medianBlur(thresh, 3)  # median blur
+           dilate = cv2.dilate(median_blur, kernel, iterations=1)
+           pre_done = cv2.erode(dilate, kernel, iterations=2)
+           frame_local = sil_de(pre_done, frame)  # def detecting and circumscribe
+           vector_fea = hog_pro(frame_local)
+           #write_fea(vector_fea)
+           cv2.imshow("name", frame)
+           # out.write(frame)  # output
+   
+           if cv2.waitKey(50) & 0xff == 27:
+               break
+       dir.release()
+       cv2.destroyAllWindows()
+   
+   
+   def write_fea(fea):
+       f = open("D:/python lib/datasets/feature.txt", mode="w", encoding="gbk")
+       if len(fea) is None:
+           print("no feature to write..")
+       else:
+           for i in range(len(fea)):
+               for j in range(len(fea[i])):
+                   f.write(str(fea[i][j]))  # write函数不能写int类型的参数，所以使用str()转化
+                   f.write("\t")  # 相当于Tab一下，换一个单元格
+               f.write("\n")  # 写完一行立马换行
+           f.close()
+   if __name__ == "__main__":
+       cap_camera()
    ~~~
-
+   
+   
+   
    
 
 
