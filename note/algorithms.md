@@ -1,5 +1,29 @@
 ## algorithms(趣味算法_陈小玉)
 
+思维引导： 
+
+​	-1 1 -1 1  ..... n  
+
+~~~python
+1.
+sum = 0 
+n = 10
+for i in range(n):
+    sum += (-1)**i
+    i += 1
+print(sum)
+
+2.sum = 0 
+n = 10
+if (n%2 == 0):
+    sum = 0
+else: 
+    sum = -1
+print(sum)
+~~~
+
+
+
 ### Greedy algorithm
 
 #### bubbling sort
@@ -25,6 +49,7 @@ print(lis)
 #### 加勒比海盗船_最优装载问题
 
 ~~~python
+
 ~~~
 
 
